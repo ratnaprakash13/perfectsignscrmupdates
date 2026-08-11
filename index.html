@@ -131,15 +131,12 @@
         }
 
         .status-badge {
-            background: rgba(52, 211, 153, 0.1);
-            color: var(--accent-green);
             padding: 4px 12px;
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            border: 1px solid rgba(52, 211, 153, 0.2);
             display: flex;
             align-items: center;
             gap: 6px;
@@ -148,10 +145,7 @@
         .status-pulse {
             width: 7px;
             height: 7px;
-            background-color: var(--accent-green);
             border-radius: 50%;
-            box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7);
-            animation: pulse 1.6s infinite;
         }
 
         @keyframes pulse {
@@ -163,6 +157,11 @@
             0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(251, 146, 60, 0.7); }
             70% { transform: scale(1); box-shadow: 0 0 0 5px rgba(251, 146, 60, 0); }
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(251, 146, 60, 0); }
+        }
+        @keyframes pulse-blue {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 5px rgba(56, 189, 248, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
         }
 
         .progress-bar-wrapper {
@@ -188,10 +187,10 @@
 
         .progress-fill {
             height: 100%;
-            width: 23%; /* In Progress: 23% */
             background: linear-gradient(to right, var(--accent-blue), var(--accent-purple));
             border-radius: 4px;
             box-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+            transition: width 0.5s ease-out;
         }
 
         /* Timeline Section */
@@ -425,6 +424,434 @@
             color: var(--text-muted);
             margin-top: 10px;
         }
+
+        /* Developer Panel Styles */
+        .admin-toggle-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: var(--bg-surface);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--accent-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 10px rgba(56, 189, 248, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .admin-toggle-btn:hover {
+            transform: rotate(45deg) scale(1.1);
+            border-color: var(--accent-purple);
+            color: var(--accent-purple);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5), 0 0 15px rgba(168, 85, 247, 0.3);
+        }
+
+        .admin-panel {
+            position: fixed;
+            top: 0;
+            right: -520px;
+            width: 500px;
+            height: 100vh;
+            background: rgba(10, 14, 23, 0.96);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-left: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: -10px 0 40px rgba(0, 0, 0, 0.6);
+            z-index: 999;
+            transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+        }
+        .admin-panel.open {
+            right: 0;
+        }
+        
+        .admin-header {
+            padding: 24px 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .admin-header h2 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .admin-close-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .admin-close-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .admin-tabs {
+            display: flex;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(0, 0, 0, 0.2);
+        }
+        .admin-tab-btn {
+            flex: 1;
+            padding: 14px 10px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            border-bottom: 2px solid transparent;
+        }
+        .admin-tab-btn:hover {
+            color: var(--text-secondary);
+        }
+        .admin-tab-btn.active {
+            color: var(--accent-blue);
+            border-bottom-color: var(--accent-blue);
+            background: rgba(56, 189, 248, 0.02);
+        }
+
+        .admin-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .admin-tab-content {
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .admin-tab-content.active {
+            display: flex;
+        }
+
+        /* Form styling */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .form-group label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .form-control {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 10px 14px;
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: 0.88rem;
+            transition: all 0.2s;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%2394a3b8' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            background-size: 20px;
+            padding-right: 40px;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .range-slider-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .range-slider-group input[type="range"] {
+            flex: 1;
+            accent-color: var(--accent-blue);
+            height: 6px;
+            border-radius: 4px;
+        }
+        .range-val {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--accent-blue);
+            min-width: 36px;
+        }
+
+        /* Dynamic list builder (Tasks & Tags) */
+        .list-builder {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.15);
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+        .list-builder-input-row {
+            display: flex;
+            gap: 8px;
+        }
+        .list-builder-items {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            max-height: 140px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+        .list-builder-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+        }
+        .list-builder-item-text {
+            flex: 1;
+            color: var(--text-secondary);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding-right: 10px;
+        }
+        .list-builder-remove-btn {
+            background: transparent;
+            border: none;
+            color: var(--accent-orange);
+            cursor: pointer;
+            font-size: 0.95rem;
+            padding: 2px;
+            display: flex;
+            align-items: center;
+        }
+        .list-builder-remove-btn:hover {
+            color: #ef4444;
+        }
+
+        /* Manage list styling */
+        .search-control {
+            margin-bottom: 12px;
+        }
+        .manage-logs-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            overflow-y: auto;
+            flex: 1;
+            max-height: 480px;
+            padding-right: 4px;
+        }
+        .manage-log-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 10px;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
+        }
+        .manage-log-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+        .manage-log-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            overflow: hidden;
+            padding-right: 10px;
+        }
+        .manage-log-info h4 {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .manage-log-meta {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            display: flex;
+            gap: 10px;
+        }
+        .manage-log-actions {
+            display: flex;
+            gap: 8px;
+        }
+        .action-btn {
+            padding: 6px 12px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s;
+            border: 1px solid transparent;
+        }
+        .edit-action-btn {
+            background: rgba(56, 189, 248, 0.08);
+            border-color: rgba(56, 189, 248, 0.2);
+            color: var(--accent-blue);
+        }
+        .edit-action-btn:hover {
+            background: var(--accent-blue);
+            color: var(--bg-primary);
+        }
+        .delete-action-btn {
+            background: rgba(251, 146, 60, 0.08);
+            border-color: rgba(251, 146, 60, 0.2);
+            color: var(--accent-orange);
+        }
+        .delete-action-btn:hover {
+            background: #ef4444;
+            border-color: #ef4444;
+            color: white;
+        }
+
+        /* Footer buttons inside Admin Panel */
+        .admin-footer {
+            padding: 20px 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.15);
+        }
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.88rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.25);
+        }
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.35);
+        }
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
+        }
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .btn-add {
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            color: var(--accent-blue);
+            padding: 8px 16px;
+            font-size: 0.8rem;
+            width: auto;
+            border-radius: 6px;
+        }
+        .btn-add:hover {
+            background: var(--accent-blue);
+            color: var(--bg-primary);
+        }
+
+        /* Overlay */
+        .admin-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .admin-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(18, 24, 43, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--accent-blue);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            z-index: 1001;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            pointer-events: none;
+        }
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+        .toast-success {
+            border-color: var(--accent-green);
+        }
+
+        @media (max-width: 600px) {
+            .admin-panel {
+                width: 100%;
+                right: -100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -432,557 +859,1442 @@
     <div class="container">
 
         <!-- Project Header -->
-        <header class="header-panel">
-            <div class="project-details">
-                <div class="project-title">
-                    <h1>Perfect Signs CRM</h1>
-                    <div class="client-info">
-                        <div class="client-avatar">P</div>
-                        <span>Project: Backend Configuration & Database Servers</span>
-                    </div>
-                </div>
-                <div class="status-badge" style="color: var(--accent-orange); border-color: rgba(251, 146, 60, 0.2); background: rgba(251, 146, 60, 0.1);">
-                    <span class="status-pulse" style="background-color: var(--accent-orange); box-shadow: 0 0 0 0 rgba(251, 146, 60, 0.7); animation: pulse-orange 1.6s infinite;"></span>
-                    In Progress
-                </div>
-            </div>
-
-            <div class="progress-bar-wrapper">
-                <div class="progress-labels">
-                    <span style="color: var(--text-secondary);">Overall Project Progress</span>
-                    <span style="color: var(--accent-blue); font-weight: 700;">23%</span>
-                </div>
-                <div class="progress-track">
-                    <div class="progress-fill"></div>
-                </div>
-            </div>
+        <header class="header-panel" id="project-header">
+            <!-- Dynamic project header content -->
         </header>
 
         <!-- Vertical Timeline Dashboard -->
         <main class="timeline-panel">
-            <h2 class="timeline-header">
-                <svg width="18" height="18" fill="var(--accent-blue)" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8zm1-13h-2v6l5.25 3.15 1-1.67L13 11.5V7z"/>
-                </svg>
-                June 2026 Daily Progress Timeline
+            <h2 class="timeline-header" id="timeline-title-container">
+                <!-- Dynamic Title -->
             </h2>
 
-            <div class="timeline-container">
-
-                <!-- June 30 -->
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-card">
-                        <div class="timeline-card-header">
-                            <div class="badge-row">
-                                <span class="date-badge">Jun 30, 2026</span>
-                                <span class="category-badge">Infrastructure</span>
-                            </div>
-                        </div>
-                        <h3>Production Testing & SSL Handshake</h3>
-                        <p class="timeline-desc">Executed secure socket handshakes, ran end-to-end routing simulation checks, and certified full readiness for deployment.</p>
-                        <ul class="task-list">
-                            <li class="task-item"><span class="check-mark">✓</span> Verified HTTPS SSL bindings on Windows Server IIS</li>
-                            <li class="task-item"><span class="check-mark">✓</span> Ran traffic load metrics between the separate server nodes</li>
-                        </ul>
-                        <div class="tag-row">
-                            <span class="tag-pill">IIS</span>
-                            <span class="tag-pill">SSL</span>
-                            <span class="tag-pill">Testing</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- June 29 -->
-                <div class="timeline-item purple-theme">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-card">
-                        <div class="timeline-card-header">
-                            <div class="badge-row">
-                                <span class="date-badge">Jun 29, 2026</span>
-                                <span class="category-badge">Frontend</span>
-                            </div>
-                        </div>
-                        <h3>React Production Builds & IIS MIME Setup</h3>
-                        <p class="timeline-desc">Compiled the Vite React dashboard into optimized static assets and configured necessary MIME type bindings in IIS.</p>
-                        <ul class="task-list">
-                            <li class="task-item"><span class="check-mark">✓</span> Run `npm run build` optimization parameters</li>
-                            <li class="task-item"><span class="check-mark">✓</span> Configured web.config rules to serve JSON static files securely</li>
-                        </ul>
-                        <div class="tag-row">
-                            <span class="tag-pill">React</span>
-                            <span class="tag-pill">Vite</span>
-                            <span class="tag-pill">web.config</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- June 26 -->
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-card">
-                        <div class="timeline-card-header">
-                            <div class="badge-row">
-                                <span class="date-badge">Jun 26, 2026</span>
-                                <span class="category-badge">Backend</span>
-                            </div>
-                        </div>
-                        <h3>Secure Portal Access Token Validation</h3>
-                        <p class="timeline-desc">Implemented secure access token filters on the .NET 10 API middleware to restrict client access to whitelisted domains.</p>
-                        <ul class="task-list">
-                            <li class="task-item"><span class="check-mark">✓</span> Programmed JWT token policy rules in Program.cs</li>
-                            <li class="task-item"><span class="check-mark">✓</span> Sanitized secure API access endpoints</li>
-                        </ul>
-                        <div class="tag-row">
-                            <span class="tag-pill">.NET 10</span>
-                            <span class="tag-pill">JWT</span>
-                            <span class="tag-pill">Middleware</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- June 25 -->
-                <div class="timeline-item green-theme">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-card">
-                        <div class="timeline-card-header">
-                            <div class="badge-row">
-                                <span class="date-badge">Jun 25, 2026</span>
-                                <span class="category-badge">Bug Fixes</span>
-                            </div>
-                        </div>
-                        <h3>Bug Fix: Safari Flexbox Layout Issues</h3>
-                        <p class="timeline-desc">Fixed rendering bugs where scrolling cards on the client timeline dashboard were misaligned on Safari browsers.</p>
-                        <ul class="task-list">
-                            <li class="task-item"><span class="check-mark">✓</span> Patched CSS variables containing webkit viewport definitions</li>
-                            <li class="task-item"><span class="check-mark">✓</span> Certified desktop layout alignment on Safari 17+</li>
-                        </ul>
-                        <div class="tag-row">
-                            <span class="tag-pill">CSS</span>
-                            <span class="tag-pill">Safari</span>
-                            <span class="tag-pill">Flexbox</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- June 24 is Saint-Jean-Baptiste Day (Quebec Holiday) - Excluded -->
-
-                <!-- June 23 -->
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-card">
-                        <div class="timeline-card-header">
-                            <div class="badge-row">
-                                <span class="date-badge">Jun 23, 2026</span>
-                                <span class="category-badge">Backend</span>
-                            </div>
-                        </div>
-                        <h3>Project WorkUpdates API Controller</h3>
-                        <p class="timeline-desc">Programmed C# controllers to support the timeline database storage, enabling JSON updates to write to Postgres.</p>
-                        <ul class="task-list">
-                            <li class="task-item"><span class="check-mark">✓</span> Coded CRUD endpoints inside ProjectUpdatesController</li>
-                            <li class="task-item"><span class="check-mark">✓</span> Wrote unit tests confirming JSON payload serialization</li>
-                        </ul>
-                        <div class="tag-row">
-                            <span class="tag-pill">.NET 10</span>
-                            <span class="tag-pill">JSONB</span>
-                            <span class="tag-pill">API</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- June 22 -->
-                <div class="timeline-item purple-theme">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-card">
-                        <div class="timeline-card-header">
-                            <div class="badge-row">
-                                <span class="date-badge">Jun 22, 2026</span>
-                                <span class="category-badge">Backend</span>
-                            </div>
-                        </div>
-                        <h3>AWS SES Mailer SDK Connections</h3>
-                        <p class="timeline-desc">Integrated the AWS SDK SES client to process notification emails when invoice payments are simulated.</p>
-                        <ul class="task-list">
-                            <li class="task-item"><span class="check-mark">✓</span> Wrote MailKit wrappers referencing credentials</li>
-                            <li class="task-item"><span class="check-mark">✓</span> Set up secure template format files for notifications</li>
-                        </ul>
-                        <div class="tag-row">
-                            <span class="tag-pill">AWS SES</span>
-                            <span class="tag-pill">SMTP</span>
-                            <span class="tag-pill">C#</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- June 19 -->
-                <div class="timeline-item green-theme">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-card">
-                        <div class="timeline-card-header">
-                            <div class="badge-row">
-                                <span class="date-badge">Jun 19, 2026</span>
-                                <span class="category-badge">Bug Fixes</span>
-                            </div>
-                        </div>
-                        <h3>Bug Fix: Server PostgreSQL Timeout</h3>
-                        <p class="timeline-desc">Resolved database query timeouts occurring when the Windows API server requested lists from the IONOS Ubuntu database.</p>
-                        <ul class="task-list">
-                            <li class="task-item"><span class="check-mark">✓</span> Tuned EF Core connection pooling parameters</li>
-                            <li class="task-item"><span class="check-mark">✓</span> Increased KeepAlive properties on Npgsql configurations</li>
-                        </ul>
-                        <div class="tag-row">
-                            <span class="tag-pill">EF Core</span>
-                            <span class="tag-pill">Npgsql</span>
-                            <span class="tag-pill">Database</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- June 18 -->
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-card">
-                        <div class="timeline-card-header">
-                            <div class="badge-row">
-                                <span class="date-badge">Jun 18, 2026</span>
-                                <span class="category-badge">Infrastructure</span>
-                            </div>
-                        </div>
-                        <h3>IIS Rewrite Rules & ARR Proxy configuration</h3>
-                        <p class="timeline-desc">Configured URL Rewrite files to proxy browser traffic to the backend API services securely.</p>
-                        <ul class="task-list">
-                            <li class="task-item"><span class="check-mark">✓</span> Configured IIS Application Request Routing</li>
-                            <li class="task-item"><span class="check-mark">✓</span> Programmed URL pattern rules to route `/api/*` requests to port 5000</li>
-                        </ul>
-                        <div class="tag-row">
-                            <span class="tag-pill">IIS</span>
-                            <span class="tag-pill">URL Rewrite</span>
-                            <span class="tag-pill">Proxy</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- June 17 -->
-                <div class="timeline-item purple-theme">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-card">
-                        <div class="timeline-card-header">
-                            <div class="badge-row">
-                                <span class="date-badge">Jun 17, 2026</span>
-                                <span class="category-badge">Infrastructure</span>
-                            </div>
-                        </div>
-                        <h3>C# Web API Windows Service wrapping</h3>
-                        <p class="timeline-desc">Set up local system service scripts to run the .NET 10 API executable automatically on Windows startup.</p>
-                        <ul class="task-list">
-                            <li class="task-item"><span class="check-mark">✓</span> Wrote task schedules for Kestrel execution</li>
-                            <li class="task-item"><span class="check-mark">✓</span> Inspected event logs to verify service health</li>
-                        </ul>
-                        <div class="tag-row">
-                            <span class="tag-pill">Windows Server</span>
-                            <span class="tag-pill">Kestrel</span>
-                            <span class="tag-pill">Services</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- June 16 -->
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-card">
-                        <div class="timeline-card-header">
-                            <div class="badge-row">
-                                <span class="date-badge">Jun 16, 2026</span>
-                                <span class="category-badge">Database</span>
-                            </div>
-                        </div>
-                        <h3>Ubuntu Cloud Port & Firewall whitelist</h3>
-                        <p class="timeline-desc">Configured the IONOS Linux virtual server firewall parameters to whitelist request IPs securely.</p>
-                        <ul class="task-list">
-                            <li class="task-item"><span class="check-mark">✓</span> Whitelisted the Windows Server IP inside UFW</li>
-                            <li class="task-item"><span class="check-mark">✓</span> Configured PostgreSQL listening address bindings</li>
-                        </ul>
-                        <div class="tag-row">
-                            <span class="tag-pill">UFW</span>
-                            <span class="tag-pill">Firewall</span>
-                            <span class="tag-pill">IONOS</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- June 15 -->
-                <div class="timeline-item green-theme">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-card">
-                        <div class="timeline-card-header">
-                            <div class="badge-row">
-                                <span class="date-badge">Jun 15, 2026</span>
-                                <span class="category-badge">Frontend</span>
-                            </div>
-                        </div>
-                        <h3>Bootstrap Grid Integrations in React</h3>
-                        <p class="timeline-desc">Integrated Bootstrap styling libraries into the CRM components to build responsive dashboards.</p>
-                        <ul class="task-list">
-                            <li class="task-item"><span class="check-mark">✓</span> Imported customized Bootstrap Sass variables</li>
-                            <li class="task-item"><span class="check-mark">✓</span> Designed grid system for CRM analytics panel</li>
-                        </ul>
-                        <div class="tag-row">
-                            <span class="tag-pill">React</span>
-                            <span class="tag-pill">Bootstrap</span>
-                            <span class="tag-pill">SCSS</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- June 12 -->
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-card">
-                        <div class="timeline-card-header">
-                            <div class="badge-row">
-                                <span class="date-badge">Jun 12, 2026</span>
-                                <span class="category-badge">Bug Fixes</span>
-                            </div>
-                        </div>
-                        <h3>Bug Fix: API CORS Policy Block</h3>
-                        <p class="timeline-desc">Resolved backend CORS errors that were blocking Vite React development traffic during API requests.</p>
-                        <ul class="task-list">
-                            <li class="task-item"><span class="check-mark">✓</span> Added dynamic CORS policies in Program.cs</li>
-                            <li class="task-item"><span class="check-mark">✓</span> Tested request headers mapping</li>
-                        </ul>
-                        <div class="tag-row">
-                            <span class="tag-pill">CORS</span>
-                            <span class="tag-pill">Web API</span>
-                            <span class="tag-pill">Fix</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- June 11 -->
-                <div class="timeline-item purple-theme">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-card">
-                        <div class="timeline-card-header">
-                            <div class="badge-row">
-                                <span class="date-badge">Jun 11, 2026</span>
-                                <span class="category-badge">Backend</span>
-                            </div>
-                        </div>
-                        <h3>CRM Client CRUD controllers</h3>
-                        <p class="timeline-desc">Programmed .NET Controller files mapping Client CRM accounts, enabling full lead tracking APIs.</p>
-                        <ul class="task-list">
-                            <li class="task-item"><span class="check-mark">✓</span> Wrote routes inside CrmController</li>
-                            <li class="task-item"><span class="check-mark">✓</span> Connected EF Core context methods to list entities</li>
-                        </ul>
-                        <div class="tag-row">
-                            <span class="tag-pill">C#</span>
-                            <span class="tag-pill">EF Core</span>
-                            <span class="tag-pill">REST</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- June 10 -->
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-card">
-                        <div class="timeline-card-header">
-                            <div class="badge-row">
-                                <span class="date-badge">Jun 10, 2026</span>
-                                <span class="category-badge">Backend</span>
-                            </div>
-                        </div>
-                        <h3>JWT Auth Token generation & filters</h3>
-                        <p class="timeline-desc">Coded authorization handlers to secure CRM admin actions, generating secure web tokens on login.</p>
-                        <ul class="task-list">
-                            <li class="task-item"><span class="check-mark">✓</span> Configured SymmetricSecurityKey parameters</li>
-                            <li class="task-item"><span class="check-mark">✓</span> Coded HMAC-SHA256 password hash helpers</li>
-                        </ul>
-                        <div class="tag-row">
-                            <span class="tag-pill">JWT</span>
-                            <span class="tag-pill">SHA-256</span>
-                            <span class="tag-pill">Security</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- June 09 -->
-                <div class="timeline-item green-theme">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-card">
-                        <div class="timeline-card-header">
-                            <div class="badge-row">
-                                <span class="date-badge">Jun 09, 2026</span>
-                                <span class="category-badge">Database</span>
-                            </div>
-                        </div>
-                        <h3>EF Core connection pooling & mapping</h3>
-                        <p class="timeline-desc">Configured the API database pool, mapping PostgreSQL database schemas into C# properties.</p>
-                        <ul class="task-list">
-                            <li class="task-item"><span class="check-mark">✓</span> Setup DB sets inside AppDbContext</li>
-                            <li class="task-item"><span class="check-mark">✓</span> Verified migration mappings using Npgsql packages</li>
-                        </ul>
-                        <div class="tag-row">
-                            <span class="tag-pill">EF Core</span>
-                            <span class="tag-pill">Npgsql</span>
-                            <span class="tag-pill">C#</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- June 08 -->
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-card">
-                        <div class="timeline-card-header">
-                            <div class="badge-row">
-                                <span class="date-badge">Jun 08, 2026</span>
-                                <span class="category-badge">Database</span>
-                            </div>
-                        </div>
-                        <h3>PostgreSQL DDL schema initialization</h3>
-                        <p class="timeline-desc">Created standard database tables and whitelisted key index references to prepare for migrations.</p>
-                        <ul class="task-list">
-                            <li class="task-item"><span class="check-mark">✓</span> Wrote initial schema setup script files</li>
-                            <li class="task-item"><span class="check-mark">✓</span> Configured primary table entities (Users, Subscriptions)</li>
-                        </ul>
-                        <div class="tag-row">
-                            <span class="tag-pill">SQL</span>
-                            <span class="tag-pill">Postgres</span>
-                            <span class="tag-pill">DDL</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- June 05 -->
-                <div class="timeline-item purple-theme">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-card">
-                        <div class="timeline-card-header">
-                            <div class="badge-row">
-                                <span class="date-badge">Jun 05, 2026</span>
-                                <span class="category-badge">Infrastructure</span>
-                            </div>
-                        </div>
-                        <h3>Development Server & HTTPS bindings</h3>
-                        <p class="timeline-desc">Configured local development HTTPS certificates and verified hosting parameters under IIS configurations.</p>
-                        <ul class="task-list">
-                            <li class="task-item"><span class="check-mark">✓</span> Generated local localhost SSL certificates</li>
-                            <li class="task-item"><span class="check-mark">✓</span> Inspected port parameters inside launchSettings</li>
-                        </ul>
-                        <div class="tag-row">
-                            <span class="tag-pill">IIS Express</span>
-                            <span class="tag-pill">SSL</span>
-                            <span class="tag-pill">Setup</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- June 04 -->
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-card">
-                        <div class="timeline-card-header">
-                            <div class="badge-row">
-                                <span class="date-badge">Jun 04, 2026</span>
-                                <span class="category-badge">Backend</span>
-                            </div>
-                        </div>
-                        <h3>ASP.NET Core (.NET 10) API setup</h3>
-                        <p class="timeline-desc">Created the backend core directory structure, scaffolded project config files, and verified building pipelines.</p>
-                        <ul class="task-list">
-                            <li class="task-item"><span class="check-mark">✓</span> Scaffolded ClientPortal.Api project solution</li>
-                            <li class="task-item"><span class="check-mark">✓</span> Wrote assembly package definitions</li>
-                        </ul>
-                        <div class="tag-row">
-                            <span class="tag-pill">.NET 10</span>
-                            <span class="tag-pill">C#</span>
-                            <span class="tag-pill">SDK</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- June 03 -->
-                <div class="timeline-item green-theme">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-card">
-                        <div class="timeline-card-header">
-                            <div class="badge-row">
-                                <span class="date-badge">Jun 03, 2026</span>
-                                <span class="category-badge">Database</span>
-                            </div>
-                        </div>
-                        <h3>PostgreSQL local server installation</h3>
-                        <p class="timeline-desc">Installed and initialized the local PostgreSQL database server, configuring connection properties.</p>
-                        <ul class="task-list">
-                            <li class="task-item"><span class="check-mark">✓</span> Initialized database engine system variables</li>
-                            <li class="task-item"><span class="check-mark">✓</span> Configured default admin credentials and databases</li>
-                        </ul>
-                        <div class="tag-row">
-                            <span class="tag-pill">Postgres</span>
-                            <span class="tag-pill">Database</span>
-                            <span class="tag-pill">Setup</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- June 02 -->
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-card">
-                        <div class="timeline-card-header">
-                            <div class="badge-row">
-                                <span class="date-badge">Jun 02, 2026</span>
-                                <span class="category-badge">Frontend</span>
-                            </div>
-                        </div>
-                        <h3>Bootstrap 5 installation & SCSS structure</h3>
-                        <p class="timeline-desc">Installed Bootstrap 5 layout libraries and configured SCSS files to set custom branding theme variables.</p>
-                        <ul class="task-list">
-                            <li class="task-item"><span class="check-mark">✓</span> Configured custom bootstrap grids</li>
-                            <li class="task-item"><span class="check-mark">✓</span> Wrote variables file overriding colors and buttons</li>
-                        </ul>
-                        <div class="tag-row">
-                            <span class="tag-pill">Bootstrap 5</span>
-                            <span class="tag-pill">SCSS</span>
-                            <span class="tag-pill">Design</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- June 01 -->
-                <div class="timeline-item purple-theme">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-card">
-                        <div class="timeline-card-header">
-                            <div class="badge-row">
-                                <span class="date-badge">Jun 01, 2026</span>
-                                <span class="category-badge">Frontend</span>
-                            </div>
-                        </div>
-                        <h3>Node.js environment & Vite React setup</h3>
-                        <p class="timeline-desc">Installed Node.js LTS packages locally and scaffolded the React template using Vite tools.</p>
-                        <ul class="task-list">
-                            <li class="task-item"><span class="check-mark">✓</span> Configured node environment paths</li>
-                            <li class="task-item"><span class="check-mark">✓</span> Scaffolded React frontend repository</li>
-                        </ul>
-                        <div class="tag-row">
-                            <span class="tag-pill">Node.js</span>
-                            <span class="tag-pill">React</span>
-                            <span class="tag-pill">Vite</span>
-                        </div>
-                    </div>
-                </div>
-
+            <div class="timeline-container" id="timeline-items-container">
+                <!-- Dynamic timeline items -->
             </div>
         </main>
 
         <footer>
-            West Coast Technik &copy; 2026. June Work Audit Timeline.
+            West Coast Technik &copy; 2026. Work Audit Timeline.
         </footer>
 
     </div>
 
+    <!-- Floating Developer Tool Gear -->
+    <div class="admin-toggle-btn" id="admin-toggle" title="Developer Admin Panel">
+        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+        </svg>
+    </div>
+
+    <!-- Admin Side Panel Drawer -->
+    <div class="admin-panel" id="admin-panel">
+        <div class="admin-header">
+            <h2>Developer Admin</h2>
+            <button class="admin-close-btn" id="admin-close">&times;</button>
+        </div>
+
+        <div class="admin-tabs">
+            <button class="admin-tab-btn active" data-tab="tab-project">Project Info</button>
+            <button class="admin-tab-btn" data-tab="tab-logs">Manage Logs</button>
+            <button class="admin-tab-btn" data-tab="tab-form" id="tab-form-trigger">Add Daily Log</button>
+        </div>
+
+        <div class="admin-content">
+            
+            <!-- Tab 1: Project Metadata -->
+            <div class="admin-tab-content active" id="tab-project">
+                <div class="form-group">
+                    <label for="proj-title">Project Title</label>
+                    <input type="text" id="proj-title" class="form-control" placeholder="E.g., Perfect Signs CRM">
+                </div>
+                <div class="form-group">
+                    <label for="proj-desc">Project Description / Client Info</label>
+                    <input type="text" id="proj-desc" class="form-control" placeholder="E.g., Project: Backend Configuration & Database Servers">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="proj-avatar">Client Avatar Character</label>
+                        <input type="text" id="proj-avatar" class="form-control" maxlength="2" placeholder="E.g., P">
+                    </div>
+                    <div class="form-group">
+                        <label for="proj-status">Project Status</label>
+                        <select id="proj-status" class="form-control">
+                            <option value="In Progress">In Progress</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Planning">Planning</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Overall Progress Percentage</label>
+                    <div class="range-slider-group">
+                        <input type="range" id="proj-progress" min="0" max="100" value="0">
+                        <span class="range-val" id="progress-val-label">0%</span>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top: 10px;">
+                    <label for="proj-timeline-title">Timeline Section Header</label>
+                    <input type="text" id="proj-timeline-title" class="form-control" placeholder="E.g., June & July 2026 Daily Progress Timeline">
+                </div>
+            </div>
+
+            <!-- Tab 2: Logs List -->
+            <div class="admin-tab-content" id="tab-logs">
+                <div class="form-group search-control">
+                    <input type="text" id="log-search" class="form-control" placeholder="Filter logs by keyword...">
+                </div>
+                <div class="manage-logs-list" id="manage-logs-list">
+                    <!-- Javascript renders list of logs for edit/delete -->
+                </div>
+            </div>
+
+            <!-- Tab 3: Add / Edit Log Form -->
+            <div class="admin-tab-content" id="tab-form">
+                <h3 id="form-heading" style="font-size: 0.95rem; text-transform: uppercase; color: var(--accent-blue); letter-spacing: 0.5px;">Add New Log</h3>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="log-date">Date</label>
+                        <input type="text" id="log-date" class="form-control" placeholder="E.g., Jun 30, 2026">
+                    </div>
+                    <div class="form-group">
+                        <label for="log-category">Category</label>
+                        <input type="text" id="log-category" class="form-control" placeholder="E.g., Infrastructure, Frontend">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="log-theme">Timeline Theme Dot</label>
+                        <select id="log-theme" class="form-control">
+                            <option value="default">Blue Accent (Default)</option>
+                            <option value="purple-theme">Purple Accent</option>
+                            <option value="green-theme">Green Accent</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="log-title">Log Header / Title</label>
+                        <input type="text" id="log-title" class="form-control" placeholder="E.g., SSL Handshake">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="log-desc">Description Summary</label>
+                    <textarea id="log-desc" class="form-control" rows="2" placeholder="Brief summary of work done..."></textarea>
+                </div>
+
+                <!-- Tasks Builder -->
+                <div class="form-group">
+                    <label>Task Bullets</label>
+                    <div class="list-builder">
+                        <div class="list-builder-input-row">
+                            <input type="text" id="log-task-input" class="form-control" placeholder="Add a work task item...">
+                            <button type="button" class="btn btn-add" id="btn-add-task">+</button>
+                        </div>
+                        <div class="list-builder-items" id="task-builder-items-list">
+                            <!-- Tasks listed here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tags Builder -->
+                <div class="form-group">
+                    <label>Tech Tags</label>
+                    <div class="list-builder">
+                        <div class="list-builder-input-row">
+                            <input type="text" id="log-tag-input" class="form-control" placeholder="Add a tag (e.g. React, C#)...">
+                            <button type="button" class="btn btn-add" id="btn-add-tag">+</button>
+                        </div>
+                        <div class="list-builder-items" id="tag-builder-items-list" style="flex-direction: row; flex-wrap: wrap; gap: 6px;">
+                            <!-- Tags listed here -->
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-primary" id="btn-save-log" style="margin-top: 10px;">Add Log to Timeline</button>
+                <button type="button" class="btn btn-secondary" id="btn-cancel-edit" style="display: none;">Cancel Edit</button>
+            </div>
+
+        </div>
+
+        <div class="admin-footer">
+            <button class="btn btn-primary" id="admin-save-download">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="margin-top:-2px;">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                </svg>
+                Save & Download index.html
+            </button>
+            <p style="font-size:0.7rem; color: var(--text-muted); text-align:center;">
+                Downloads the updated HTML file. Replace your local file and push to git to publish updates.
+            </p>
+        </div>
+    </div>
+
+    <div class="admin-overlay" id="admin-overlay"></div>
+    <div class="toast" id="toast-message">✓ Changes applied successfully</div>
+
+    <!-- JSON Data Store containing all timeline logs -->
+    <script id="timeline-data" type="application/json">
+{
+  "projectTitle": "Perfect Signs CRM & Portals",
+  "clientInfo": "Project: CRM Integrations, Multi-sites & Custom Invoicing",
+  "clientAvatar": "P",
+  "status": "In Progress",
+  "progress": 65,
+  "timelineTitle": "June & July 2026 Daily Progress Timeline",
+  "items": [
+    {
+      "id": "july-1",
+      "date": "Jul 31, 2026",
+      "category": "Infrastructure",
+      "title": "Production Deployment & SSL Binding",
+      "description": "Verified HTTPS SSL certificates, cleared debug logs, and performed the final deployment sign-off for the July CRM update.",
+      "theme": "default",
+      "tasks": [
+        "Verified SSL bindings and server response headers on IIS",
+        "Performed post-deployment routing and sanity tests on crm.perfectsignscanada.com"
+      ],
+      "tags": [
+        "IIS",
+        "SSL",
+        "Production"
+      ]
+    },
+    {
+      "id": "july-2",
+      "date": "Jul 30, 2026",
+      "category": "Infrastructure",
+      "title": "Technical Release Notes & Client Guide",
+      "description": "Authored release notes detailing image size boundaries and compiled usage guides for the daycare administration.",
+      "theme": "purple-theme",
+      "tasks": [
+        "Wrote client-facing documentation explaining image optimization limits",
+        "Sent WhatsApp and email updates to client detailing the CRM resolution"
+      ],
+      "tags": [
+        "Documentation",
+        "Release Notes"
+      ]
+    },
+    {
+      "id": "july-3",
+      "date": "Jul 29, 2026",
+      "category": "Bug Fixes",
+      "title": "Bug Fix: Image Upload Bundler Crash",
+      "description": "Resolved critical Vite compiler crashes triggered when clients uploaded uncompressed high-resolution images to daycare pages.",
+      "theme": "green-theme",
+      "tasks": [
+        "Added client-side image size warnings and asset compression rules",
+        "Fixed CSS style shifts caused by un-optimized media wrappers"
+      ],
+      "tags": [
+        "Vite",
+        "Assets",
+        "SCSS"
+      ]
+    },
+    {
+      "id": "july-4",
+      "date": "Jul 28, 2026",
+      "category": "Bug Fixes",
+      "title": "Zero-Downtime Fallback Configuration",
+      "description": "Configured secondary fallback templates to keep the registration page accessible during code deployments.",
+      "theme": "default",
+      "tasks": [
+        "Wrote routing redirects to load cached static templates on error",
+        "Monitored live registration telemetry to verify zero-downtime transition"
+      ],
+      "tags": [
+        "Routing",
+        "Fallback",
+        "Availability"
+      ]
+    },
+    {
+      "id": "july-5",
+      "date": "Jul 27, 2026",
+      "category": "Bug Fixes",
+      "title": "Bug Fix: Daycare Registration Submit Failure",
+      "description": "Fixed a critical submission block in crm.perfectsignscanada.com where mobile registration forms failed to submit on iOS.",
+      "theme": "green-theme",
+      "tasks": [
+        "Patched event listener defaults for touch and tap actions in React",
+        "Tested the customer registration form workflow on iPhone and iPad Safari"
+      ],
+      "tags": [
+        "React",
+        "iOS Safari",
+        "Form Validation"
+      ]
+    },
+    {
+      "id": "july-6",
+      "date": "Jul 24, 2026",
+      "category": "Database",
+      "title": "Daycare CRM Page Sync & JSON Mappings",
+      "description": "Mapped client-created pages inside the CRM to the dynamic configuration controller, ensuring newly added pages sync properly.",
+      "theme": "default",
+      "tasks": [
+        "Updated page sync routes in LespetitsController.cs",
+        "Corrected pages.json mapping errors to sync client dashboards dynamically"
+      ],
+      "tags": [
+        ".NET 10",
+        "C#",
+        "pages.json"
+      ]
+    },
+    {
+      "id": "july-7",
+      "date": "Jul 23, 2026",
+      "category": "Bug Fixes",
+      "title": "Bug Fix: Daycare CRM Publish Error",
+      "description": "Investigated issues where compiled assets (index.html, JS, images) were missing from the production build dist folder during publishes.",
+      "theme": "green-theme",
+      "tasks": [
+        "Debugged msbuild post-build task execution paths",
+        "Corrected path copying directories for index and assets in publish script"
+      ],
+      "tags": [
+        "MSBuild",
+        "Publishing",
+        "Fix"
+      ]
+    },
+    {
+      "id": "july-8",
+      "date": "Jul 22, 2026",
+      "category": "Infrastructure",
+      "title": "CRM Subdomain Routing Proxy",
+      "description": "Configured IIS URL Rewrite rules to safely proxy incoming requests from crm.perfectsignscanada.com to the backend REST API.",
+      "theme": "default",
+      "tasks": [
+        "Programmed reverse proxy rules in web.config",
+        "Verified token authorization headers are forwarded cleanly through the proxy"
+      ],
+      "tags": [
+        "IIS",
+        "URL Rewrite",
+        "Proxy"
+      ]
+    },
+    {
+      "id": "july-9",
+      "date": "Jul 21, 2026",
+      "category": "Frontend",
+      "title": "CRM Bundler Optimizations",
+      "description": "Configured production compiler settings to bundle block sections together, reducing file load times.",
+      "theme": "purple-theme",
+      "tasks": [
+        "Configured custom Webpack chunk splitting for the page builder",
+        "Added lazy loading for complex editor blocks"
+      ],
+      "tags": [
+        "Webpack",
+        "Vite",
+        "Performance"
+      ]
+    },
+    {
+      "id": "july-10",
+      "date": "Jul 20, 2026",
+      "category": "Frontend",
+      "title": "CRM Editor Help & Guides Integration",
+      "description": "Designed and integrated a beautiful, visual Help Guide explaining editor blocks, style controls, and layer managers.",
+      "theme": "purple-theme",
+      "tasks": [
+        "Coded interactive sidebar listing editor layout instructions",
+        "Designed responsive walkthrough guides for client administrator use"
+      ],
+      "tags": [
+        "React",
+        "HTML",
+        "UI Guide"
+      ]
+    },
+    {
+      "id": "july-11",
+      "date": "Jul 17, 2026",
+      "category": "Frontend",
+      "title": "Navbar & Footer WYSIWYG Editor",
+      "description": "Enabled custom client editing of global website layout headers and footers directly from the CRM editor panel.",
+      "theme": "default",
+      "tasks": [
+        "Exposed header and footer nodes as editable zones in the CRM UI",
+        "Integrated custom link-builder forms for navigation settings"
+      ],
+      "tags": [
+        "Vite",
+        "HTML5",
+        "Editor"
+      ]
+    },
+    {
+      "id": "july-12",
+      "date": "Jul 16, 2026",
+      "category": "Frontend",
+      "title": "Drag-and-Drop Registration Form Builder",
+      "description": "Implemented form block elements allowing client administrators to drag and drop checkboxes, dropdowns, and text inputs.",
+      "theme": "purple-theme",
+      "tasks": [
+        "Programmed drag-and-drop actions for form input blocks",
+        "Built responsive registration input layouts (radio buttons, selects)"
+      ],
+      "tags": [
+        "Vite React",
+        "Drag-Drop",
+        "Forms"
+      ]
+    },
+    {
+      "id": "july-13",
+      "date": "Jul 15, 2026",
+      "category": "Infrastructure",
+      "title": "IIS Directory Permission Locking",
+      "description": "Configured secure application directories and granted proper read/write access controls to the IIS_IUSRS worker group.",
+      "theme": "default",
+      "tasks": [
+        "Configured directory inheritances and resolved permission blocks on local folders",
+        "Verified security permissions on published web.config file paths"
+      ],
+      "tags": [
+        "IIS",
+        "Security",
+        "Windows Server"
+      ]
+    },
+    {
+      "id": "july-14",
+      "date": "Jul 14, 2026",
+      "category": "Infrastructure",
+      "title": "IIS Port Conflicts & Host Headers",
+      "description": "Resolved local server port conflicts on the IIS instance, allowing separate hostnames to share port 80/443 simultaneously.",
+      "theme": "purple-theme",
+      "tasks": [
+        "Configured distinct host headers in IIS bindings",
+        "Mapped separate web sites for frontend and backend server instances"
+      ],
+      "tags": [
+        "IIS",
+        "Ports",
+        "Bindings"
+      ]
+    },
+    {
+      "id": "july-15",
+      "date": "Jul 13, 2026",
+      "category": "Infrastructure",
+      "title": "Cloud Server Directory Scaffolding",
+      "description": "Set up server directory structures for deployment and whitelisted inbound connection ports on the cloud firewall.",
+      "theme": "default",
+      "tasks": [
+        "Created hosted directories under C:\\inetpub\\wwwroot\\perfectsignsreactweb",
+        "Verified server-side firewall configurations on the Windows server dashboard"
+      ],
+      "tags": [
+        "IIS",
+        "Windows Server",
+        "Firewall"
+      ]
+    },
+    {
+      "id": "july-16-invoice",
+      "date": "Jul 10, 2026",
+      "category": "Frontend",
+      "title": "Invoices Charting & Visual Dashboard",
+      "description": "Integrated chart display components in React to show dynamic billing data and invoices history.",
+      "theme": "purple-theme",
+      "tasks": [
+        "Implemented chart UI wrappers using Chart.js libraries",
+        "Connected components to active C# controller data streams"
+      ],
+      "tags": [
+        "React",
+        "Chart.js",
+        "Dashboard"
+      ]
+    },
+    {
+      "id": "july-17-invoice",
+      "date": "Jul 09, 2026",
+      "category": "Backend",
+      "title": "Invoices Graph Data API Controller",
+      "description": "Programmed backend controller endpoints to aggregate billing records, returning chart-friendly JSON payloads.",
+      "theme": "default",
+      "tasks": [
+        "Wrote aggregation query methods in AuthService.cs",
+        "Exposed dashboard REST endpoints returning formatted datasets"
+      ],
+      "tags": [
+        ".NET 10",
+        "REST",
+        "C#"
+      ]
+    },
+    {
+      "id": "july-18-invoice",
+      "date": "Jul 08, 2026",
+      "category": "Backend",
+      "title": "SMTP Email Client Wrapper",
+      "description": "Configured SMTP settings and developed mail dispatch wrappers for automated billing notifications.",
+      "theme": "purple-theme",
+      "tasks": [
+        "Configured MailKit client details with server credentials",
+        "Wrote transactional email notification triggers on invoice generation"
+      ],
+      "tags": [
+        "SMTP",
+        "C#",
+        "MailKit"
+      ]
+    },
+    {
+      "id": "july-19-invoice",
+      "date": "Jul 07, 2026",
+      "category": "Backend",
+      "title": "CRM Password Settings Panel",
+      "description": "Created secure settings API controllers to allow client administrators to change accounts credentials.",
+      "theme": "default",
+      "tasks": [
+        "Coded password reset routes inside AuthController.cs",
+        "Implemented secure salting and hashing validations for updates"
+      ],
+      "tags": [
+        ".NET 10",
+        "Security",
+        "C#"
+      ]
+    },
+    {
+      "id": "july-20-invoice",
+      "date": "Jul 06, 2026",
+      "category": "Database",
+      "title": "PostgreSQL Schema Entity Mappings",
+      "description": "Resolved PostgreSQL database configuration errors related to missing user relation tables.",
+      "theme": "green-theme",
+      "tasks": [
+        "Fixed app_users mapping definitions in AppDbContext",
+        "Ran EF Core migrations to ensure correct Postgres table schema alignments"
+      ],
+      "tags": [
+        "EF Core",
+        "Postgres",
+        "Debugging"
+      ]
+    },
+    {
+      "id": "july-21-invoice",
+      "date": "Jul 03, 2026",
+      "category": "Frontend",
+      "title": "Testimonials Scrolling Marquee",
+      "description": "Developed a smooth horizontal scrolling layout showing realistic client reviews.",
+      "theme": "green-theme",
+      "tasks": [
+        "Wrote custom CSS keyframe animations for slow marquee scrolls",
+        "Added page enter transitions to all navigation subpages"
+      ],
+      "tags": [
+        "CSS",
+        "Animations",
+        "UI/UX"
+      ]
+    },
+    {
+      "id": "july-22-invoice",
+      "date": "Jul 02, 2026",
+      "category": "Frontend",
+      "title": "Branding & Aesthetic Enhancements",
+      "description": "Refined typography sizes, brightened colors, and enlarged client brand logos for premium look.",
+      "theme": "purple-theme",
+      "tasks": [
+        "Adjusted request-a-quote button contrast and color styling",
+        "Updated layout sizes for the Trusted By client logo banner"
+      ],
+      "tags": [
+        "Vite React",
+        "CSS",
+        "Branding"
+      ]
+    },
+    {
+      "id": "item-1",
+      "date": "Jun 30, 2026",
+      "category": "Infrastructure",
+      "title": "Production Testing & SSL Handshake",
+      "description": "Executed secure socket handshakes, ran end-to-end routing simulation checks, and certified full readiness for deployment.",
+      "theme": "default",
+      "tasks": [
+        "Verified HTTPS SSL bindings on Windows Server IIS",
+        "Ran traffic load metrics between the separate server nodes"
+      ],
+      "tags": [
+        "IIS",
+        "SSL",
+        "Testing"
+      ]
+    },
+    {
+      "id": "item-2",
+      "date": "Jun 29, 2026",
+      "category": "Frontend",
+      "title": "React Production Builds & IIS MIME Setup",
+      "description": "Compiled the Vite React dashboard into optimized static assets and configured necessary MIME type bindings in IIS.",
+      "theme": "purple-theme",
+      "tasks": [
+        "Run `npm run build` optimization parameters",
+        "Configured web.config rules to serve JSON static files securely"
+      ],
+      "tags": [
+        "React",
+        "Vite",
+        "web.config"
+      ]
+    },
+    {
+      "id": "item-3",
+      "date": "Jun 26, 2026",
+      "category": "Backend",
+      "title": "Secure Portal Access Token Validation",
+      "description": "Implemented secure access token filters on the .NET 10 API middleware to restrict client access to whitelisted domains.",
+      "theme": "default",
+      "tasks": [
+        "Programmed JWT token policy rules in Program.cs",
+        "Sanitized secure API access endpoints"
+      ],
+      "tags": [
+        ".NET 10",
+        "JWT",
+        "Middleware"
+      ]
+    },
+    {
+      "id": "item-4",
+      "date": "Jun 25, 2026",
+      "category": "Bug Fixes",
+      "title": "Bug Fix: Safari Flexbox Layout Issues",
+      "description": "Fixed rendering bugs where scrolling cards on the client timeline dashboard were misaligned on Safari browsers.",
+      "theme": "green-theme",
+      "tasks": [
+        "Patched CSS variables containing webkit viewport definitions",
+        "Certified desktop layout alignment on Safari 17+"
+      ],
+      "tags": [
+        "CSS",
+        "Safari",
+        "Flexbox"
+      ]
+    },
+    {
+      "id": "item-5",
+      "date": "Jun 23, 2026",
+      "category": "Backend",
+      "title": "Project WorkUpdates API Controller",
+      "description": "Programmed C# controllers to support the timeline database storage, enabling JSON updates to write to Postgres.",
+      "theme": "default",
+      "tasks": [
+        "Coded CRUD endpoints inside ProjectUpdatesController",
+        "Wrote unit tests confirming JSON payload serialization"
+      ],
+      "tags": [
+        ".NET 10",
+        "JSONB",
+        "API"
+      ]
+    },
+    {
+      "id": "item-6",
+      "date": "Jun 22, 2026",
+      "category": "Backend",
+      "title": "AWS SES Mailer SDK Connections",
+      "description": "Integrated the AWS SDK SES client to process notification emails when invoice payments are simulated.",
+      "theme": "purple-theme",
+      "tasks": [
+        "Wrote MailKit wrappers referencing credentials",
+        "Set up secure template format files for notifications"
+      ],
+      "tags": [
+        "AWS SES",
+        "SMTP",
+        "C#"
+      ]
+    },
+    {
+      "id": "item-7",
+      "date": "Jun 19, 2026",
+      "category": "Bug Fixes",
+      "title": "Bug Fix: Server PostgreSQL Timeout",
+      "description": "Resolved database query timeouts occurring when the Windows API server requested lists from the IONOS Ubuntu database.",
+      "theme": "green-theme",
+      "tasks": [
+        "Tuned EF Core connection pooling parameters",
+        "Increased KeepAlive properties on Npgsql configurations"
+      ],
+      "tags": [
+        "EF Core",
+        "Npgsql",
+        "Database"
+      ]
+    },
+    {
+      "id": "item-8",
+      "date": "Jun 18, 2026",
+      "category": "Infrastructure",
+      "title": "IIS Rewrite Rules & ARR Proxy configuration",
+      "description": "Configured URL Rewrite files to proxy browser traffic to the backend API services securely.",
+      "theme": "default",
+      "tasks": [
+        "Configured IIS Application Request Routing",
+        "Programmed URL pattern rules to route `/api/*` requests to port 5000"
+      ],
+      "tags": [
+        "IIS",
+        "URL Rewrite",
+        "Proxy"
+      ]
+    },
+    {
+      "id": "item-9",
+      "date": "Jun 17, 2026",
+      "category": "Infrastructure",
+      "title": "C# Web API Windows Service wrapping",
+      "description": "Set up local system service scripts to run the .NET 10 API executable automatically on Windows startup.",
+      "theme": "purple-theme",
+      "tasks": [
+        "Wrote task schedules for Kestrel execution",
+        "Inspected event logs to verify service health"
+      ],
+      "tags": [
+        "Windows Server",
+        "Kestrel",
+        "Services"
+      ]
+    },
+    {
+      "id": "item-10",
+      "date": "Jun 16, 2026",
+      "category": "Database",
+      "title": "Ubuntu Cloud Port & Firewall whitelist",
+      "description": "Configured the IONOS Linux virtual server firewall parameters to whitelist request IPs securely.",
+      "theme": "default",
+      "tasks": [
+        "Whitelisted the Windows Server IP inside UFW",
+        "Configured PostgreSQL listening address bindings"
+      ],
+      "tags": [
+        "UFW",
+        "Firewall",
+        "IONOS"
+      ]
+    },
+    {
+      "id": "item-11",
+      "date": "Jun 15, 2026",
+      "category": "Frontend",
+      "title": "Bootstrap Grid Integrations in React",
+      "description": "Integrated Bootstrap styling libraries into the CRM components to build responsive dashboards.",
+      "theme": "green-theme",
+      "tasks": [
+        "Imported customized Bootstrap Sass variables",
+        "Designed grid system for CRM analytics panel"
+      ],
+      "tags": [
+        "React",
+        "Bootstrap",
+        "SCSS"
+      ]
+    },
+    {
+      "id": "item-12",
+      "date": "Jun 12, 2026",
+      "category": "Bug Fixes",
+      "title": "Bug Fix: API CORS Policy Block",
+      "description": "Resolved backend CORS errors that were blocking Vite React development traffic during API requests.",
+      "theme": "default",
+      "tasks": [
+        "Added dynamic CORS policies in Program.cs",
+        "Tested request headers mapping"
+      ],
+      "tags": [
+        "CORS",
+        "Web API",
+        "Fix"
+      ]
+    },
+    {
+      "id": "item-13",
+      "date": "Jun 11, 2026",
+      "category": "Backend",
+      "title": "CRM Client CRUD controllers",
+      "description": "Programmed .NET Controller files mapping Client CRM accounts, enabling full lead tracking APIs.",
+      "theme": "purple-theme",
+      "tasks": [
+        "Wrote routes inside CrmController",
+        "Connected EF Core context methods to list entities"
+      ],
+      "tags": [
+        "C#",
+        "EF Core",
+        "REST"
+      ]
+    },
+    {
+      "id": "item-14",
+      "date": "Jun 10, 2026",
+      "category": "Backend",
+      "title": "JWT Auth Token generation & filters",
+      "description": "Coded authorization handlers to secure CRM admin actions, generating secure web tokens on login.",
+      "theme": "default",
+      "tasks": [
+        "Configured SymmetricSecurityKey parameters",
+        "Coded HMAC-SHA256 password hash helpers"
+      ],
+      "tags": [
+        "JWT",
+        "SHA-256",
+        "Security"
+      ]
+    },
+    {
+      "id": "item-15",
+      "date": "Jun 09, 2026",
+      "category": "Database",
+      "title": "EF Core connection pooling & mapping",
+      "description": "Configured the API database pool, mapping PostgreSQL database schemas into C# properties.",
+      "theme": "green-theme",
+      "tasks": [
+        "Setup DB sets inside AppDbContext",
+        "Verified migration mappings using Npgsql packages"
+      ],
+      "tags": [
+        "EF Core",
+        "Npgsql",
+        "C#"
+      ]
+    },
+    {
+      "id": "item-16",
+      "date": "Jun 08, 2026",
+      "category": "Database",
+      "title": "PostgreSQL DDL schema initialization",
+      "description": "Created standard database tables and whitelisted key index references to prepare for migrations.",
+      "theme": "default",
+      "tasks": [
+        "Wrote initial schema setup script files",
+        "Configured primary table entities (Users, Subscriptions)"
+      ],
+      "tags": [
+        "SQL",
+        "Postgres",
+        "DDL"
+      ]
+    },
+    {
+      "id": "item-17",
+      "date": "Jun 05, 2026",
+      "category": "Infrastructure",
+      "title": "Development Server & HTTPS bindings",
+      "description": "Configured local development HTTPS certificates and verified hosting parameters under IIS configurations.",
+      "theme": "purple-theme",
+      "tasks": [
+        "Generated local localhost SSL certificates",
+        "Inspected port parameters inside launchSettings"
+      ],
+      "tags": [
+        "IIS Express",
+        "SSL",
+        "Setup"
+      ]
+    },
+    {
+      "id": "item-18",
+      "date": "Jun 04, 2026",
+      "category": "Backend",
+      "title": "ASP.NET Core (.NET 10) API setup",
+      "description": "Created the backend core directory structure, scaffolded project config files, and verified building pipelines.",
+      "theme": "default",
+      "tasks": [
+        "Scaffolded ClientPortal.Api project solution",
+        "Wrote assembly package definitions"
+      ],
+      "tags": [
+        ".NET 10",
+        "C#",
+        "SDK"
+      ]
+    },
+    {
+      "id": "item-19",
+      "date": "Jun 03, 2026",
+      "category": "Database",
+      "title": "PostgreSQL local server installation",
+      "description": "Installed and initialized the local PostgreSQL database server, configuring connection properties.",
+      "theme": "green-theme",
+      "tasks": [
+        "Initialized database engine system variables",
+        "Configured default admin credentials and databases"
+      ],
+      "tags": [
+        "Postgres",
+        "Database",
+        "Setup"
+      ]
+    },
+    {
+      "id": "item-20",
+      "date": "Jun 02, 2026",
+      "category": "Frontend",
+      "title": "Bootstrap 5 installation & SCSS structure",
+      "description": "Installed Bootstrap 5 layout libraries and configured SCSS files to set custom branding theme variables.",
+      "theme": "default",
+      "tasks": [
+        "Configured custom bootstrap grids",
+        "Wrote variables file overriding colors and buttons"
+      ],
+      "tags": [
+        "Bootstrap 5",
+        "SCSS",
+        "Design"
+      ]
+    },
+    {
+      "id": "item-21",
+      "date": "Jun 01, 2026",
+      "category": "Frontend",
+      "title": "Node.js environment & Vite React setup",
+      "description": "Installed Node.js LTS packages locally and scaffolded the React template using Vite tools.",
+      "theme": "purple-theme",
+      "tasks": [
+        "Configured node environment paths",
+        "Scaffolded React frontend repository"
+      ],
+      "tags": [
+        "Node.js",
+        "React",
+        "Vite"
+      ]
+    }
+  ]
+}
+    </script>
+
+    <!-- Main Logic -->
+    <script>
+        let appData = {};
+        let editingItemId = null;
+        let tempTasks = [];
+        let tempTags = [];
+
+        // Parse date for chronological sorting
+        function parseDate(dateStr) {
+            const d = Date.parse(dateStr);
+            return isNaN(d) ? 0 : d;
+        }
+
+        // Status Badge Style Mapper
+        function getStatusStyles(status) {
+            if (status === 'Completed') {
+                return {
+                    color: 'var(--accent-green)',
+                    borderColor: 'rgba(52, 211, 153, 0.2)',
+                    background: 'rgba(52, 211, 153, 0.1)',
+                    pulseColor: 'var(--accent-green)',
+                    pulseAnimation: 'pulse 1.6s infinite'
+                };
+            } else if (status === 'In Progress') {
+                return {
+                    color: 'var(--accent-orange)',
+                    borderColor: 'rgba(251, 146, 60, 0.2)',
+                    background: 'rgba(251, 146, 60, 0.1)',
+                    pulseColor: 'var(--accent-orange)',
+                    pulseAnimation: 'pulse-orange 1.6s infinite'
+                };
+            } else { // Planning / Other
+                return {
+                    color: 'var(--accent-blue)',
+                    borderColor: 'rgba(56, 189, 248, 0.2)',
+                    background: 'rgba(56, 189, 248, 0.1)',
+                    pulseColor: 'var(--accent-blue)',
+                    pulseAnimation: 'pulse-blue 1.6s infinite'
+                };
+            }
+        }
+
+        // Initialize Application
+        function init() {
+            try {
+                const dataElement = document.getElementById('timeline-data');
+                appData = JSON.parse(dataElement.textContent);
+            } catch (e) {
+                console.error("Error loading JSON data, falling back to default.", e);
+                appData = {
+                    projectTitle: "Perfect Signs CRM",
+                    clientInfo: "Project: Backend Configuration & Database Servers",
+                    clientAvatar: "P",
+                    status: "In Progress",
+                    progress: 23,
+                    timelineTitle: "June & July 2026 Daily Progress Timeline",
+                    items: []
+                };
+            }
+
+            renderApp();
+            setupEventListeners();
+        }
+
+        // Render main view components
+        function renderApp() {
+            // Render Header
+            const headerContainer = document.getElementById('project-header');
+            const styles = getStatusStyles(appData.status);
+            
+            headerContainer.innerHTML = `
+                <div class="project-details">
+                    <div class="project-title">
+                        <h1>${escapeHtml(appData.projectTitle)}</h1>
+                        <div class="client-info">
+                            <div class="client-avatar">${escapeHtml(appData.clientAvatar || 'P')}</div>
+                            <span>${escapeHtml(appData.clientInfo)}</span>
+                        </div>
+                    </div>
+                    <div class="status-badge" style="color: ${styles.color}; border-color: ${styles.borderColor}; background: ${styles.background};">
+                        <span class="status-pulse" style="background-color: ${styles.pulseColor}; box-shadow: 0 0 0 0 ${styles.borderColor}; animation: ${styles.pulseAnimation};"></span>
+                        ${escapeHtml(appData.status)}
+                    </div>
+                </div>
+
+                <div class="progress-bar-wrapper">
+                    <div class="progress-labels">
+                        <span style="color: var(--text-secondary);">Overall Project Progress</span>
+                        <span style="color: var(--accent-blue); font-weight: 700;">${appData.progress}%</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-fill" style="width: ${appData.progress}%;"></div>
+                    </div>
+                </div>
+            `;
+
+            // Render Timeline Title
+            document.getElementById('timeline-title-container').innerHTML = `
+                <svg width="18" height="18" fill="var(--accent-blue)" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8zm1-13h-2v6l5.25 3.15 1-1.67L13 11.5V7z"/>
+                </svg>
+                ${escapeHtml(appData.timelineTitle || 'Daily Progress Timeline')}
+            `;
+
+            // Render Timeline Items
+            const itemsContainer = document.getElementById('timeline-items-container');
+            if (!appData.items || appData.items.length === 0) {
+                itemsContainer.innerHTML = `<div style="text-align:center; padding: 40px; color: var(--text-muted);">No timeline items logged yet. Open Developer Admin to add.</div>`;
+                return;
+            }
+
+            let html = '';
+            appData.items.forEach(item => {
+                const themeClass = item.theme && item.theme !== 'default' ? item.theme : '';
+                
+                // Tasks list
+                let tasksHtml = '';
+                if (item.tasks && item.tasks.length > 0) {
+                    tasksHtml = `<ul class="task-list">
+                        ${item.tasks.map(t => `<li class="task-item"><span class="check-mark">✓</span> ${escapeHtml(t)}</li>`).join('')}
+                    </ul>`;
+                }
+
+                // Tags row
+                let tagsHtml = '';
+                if (item.tags && item.tags.length > 0) {
+                    tagsHtml = `<div class="tag-row">
+                        ${item.tags.map(tag => `<span class="tag-pill">${escapeHtml(tag)}</span>`).join('')}
+                    </div>`;
+                }
+
+                html += `
+                    <div class="timeline-item ${themeClass}">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-card-header">
+                                <div class="badge-row">
+                                    <span class="date-badge">${escapeHtml(item.date)}</span>
+                                    <span class="category-badge">${escapeHtml(item.category)}</span>
+                                </div>
+                            </div>
+                            <h3>${escapeHtml(item.title)}</h3>
+                            <p class="timeline-desc">${escapeHtml(item.description)}</p>
+                            ${tasksHtml}
+                            ${tagsHtml}
+                        </div>
+                    </div>
+                `;
+            });
+            itemsContainer.innerHTML = html;
+        }
+
+        // Render Admin panel forms and log list
+        function renderAdmin() {
+            // Load Project Metadata Form fields
+            document.getElementById('proj-title').value = appData.projectTitle;
+            document.getElementById('proj-desc').value = appData.clientInfo;
+            document.getElementById('proj-avatar').value = appData.clientAvatar;
+            document.getElementById('proj-status').value = appData.status;
+            document.getElementById('proj-progress').value = appData.progress;
+            document.getElementById('progress-val-label').textContent = `${appData.progress}%`;
+            document.getElementById('proj-timeline-title').value = appData.timelineTitle || '';
+
+            // Load Manage Logs List
+            renderManageLogsList();
+        }
+
+        function renderManageLogsList() {
+            const listContainer = document.getElementById('manage-logs-list');
+            const searchVal = document.getElementById('log-search').value.toLowerCase();
+            
+            let filtered = appData.items || [];
+            if (searchVal) {
+                filtered = filtered.filter(item => 
+                    item.title.toLowerCase().includes(searchVal) ||
+                    item.date.toLowerCase().includes(searchVal) ||
+                    item.category.toLowerCase().includes(searchVal) ||
+                    item.description.toLowerCase().includes(searchVal)
+                );
+            }
+
+            if (filtered.length === 0) {
+                listContainer.innerHTML = `<div style="text-align:center; padding: 20px; color: var(--text-muted); font-size: 0.8rem;">No logs matched filter.</div>`;
+                return;
+            }
+
+            listContainer.innerHTML = filtered.map(item => `
+                <div class="manage-log-item">
+                    <div class="manage-log-info">
+                        <h4>${escapeHtml(item.title)}</h4>
+                        <div class="manage-log-meta">
+                            <span>${escapeHtml(item.date)}</span>
+                            <span>•</span>
+                            <span>${escapeHtml(item.category)}</span>
+                        </div>
+                    </div>
+                    <div class="manage-log-actions">
+                        <button class="action-btn edit-action-btn" onclick="startEditLog('${item.id}')">Edit</button>
+                        <button class="action-btn delete-action-btn" onclick="deleteLog('${item.id}')">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Handle setting up UI interactions
+        function setupEventListeners() {
+            const adminPanel = document.getElementById('admin-panel');
+            const overlay = document.getElementById('admin-overlay');
+
+            // Open/Close Admin Drawer
+            document.getElementById('admin-toggle').addEventListener('click', () => {
+                adminPanel.classList.add('open');
+                overlay.classList.add('open');
+                renderAdmin();
+            });
+
+            document.getElementById('admin-close').addEventListener('click', closeAdminPanel);
+            overlay.addEventListener('click', closeAdminPanel);
+
+            // Tab Switching
+            const tabButtons = document.querySelectorAll('.admin-tab-btn');
+            tabButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    tabButtons.forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
+                    
+                    btn.classList.add('active');
+                    document.getElementById(btn.dataset.tab).classList.add('active');
+                });
+            });
+
+            // Metadata bindings
+            document.getElementById('proj-title').addEventListener('input', e => {
+                appData.projectTitle = e.target.value;
+                renderApp();
+            });
+            document.getElementById('proj-desc').addEventListener('input', e => {
+                appData.clientInfo = e.target.value;
+                renderApp();
+            });
+            document.getElementById('proj-avatar').addEventListener('input', e => {
+                appData.clientAvatar = e.target.value;
+                renderApp();
+            });
+            document.getElementById('proj-status').addEventListener('change', e => {
+                appData.status = e.target.value;
+                renderApp();
+            });
+            document.getElementById('proj-progress').addEventListener('input', e => {
+                appData.progress = parseInt(e.target.value) || 0;
+                document.getElementById('progress-val-label').textContent = `${appData.progress}%`;
+                renderApp();
+            });
+            document.getElementById('proj-timeline-title').addEventListener('input', e => {
+                appData.timelineTitle = e.target.value;
+                renderApp();
+            });
+
+            // Search filter logs
+            document.getElementById('log-search').addEventListener('input', renderManageLogsList);
+
+            // Tasks Builder additions
+            const taskInput = document.getElementById('log-task-input');
+            document.getElementById('btn-add-task').addEventListener('click', () => {
+                const text = taskInput.value.trim();
+                if (text) {
+                    tempTasks.push(text);
+                    taskInput.value = '';
+                    renderTempTasks();
+                }
+            });
+            taskInput.addEventListener('keypress', e => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    document.getElementById('btn-add-task').click();
+                }
+            });
+
+            // Tags Builder additions
+            const tagInput = document.getElementById('log-tag-input');
+            document.getElementById('btn-add-tag').addEventListener('click', () => {
+                const text = tagInput.value.trim();
+                if (text) {
+                    tempTags.push(text);
+                    tagInput.value = '';
+                    renderTempTags();
+                }
+            });
+            tagInput.addEventListener('keypress', e => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    document.getElementById('btn-add-tag').click();
+                }
+            });
+
+            // Add/Edit Log Form Submit button
+            document.getElementById('btn-save-log').addEventListener('click', submitLogForm);
+
+            // Cancel Edit button
+            document.getElementById('btn-cancel-edit').addEventListener('click', cancelEdit);
+
+            // Save and Download HTML
+            document.getElementById('admin-save-download').addEventListener('click', saveAndDownloadHtml);
+        }
+
+        function closeAdminPanel() {
+            document.getElementById('admin-panel').classList.remove('open');
+            document.getElementById('admin-overlay').classList.remove('open');
+            cancelEdit();
+        }
+
+        // Temp Tasks listing
+        function renderTempTasks() {
+            const container = document.getElementById('task-builder-items-list');
+            container.innerHTML = tempTasks.map((t, idx) => `
+                <div class="list-builder-item">
+                    <span class="list-builder-item-text" title="${escapeHtml(t)}">${escapeHtml(t)}</span>
+                    <button type="button" class="list-builder-remove-btn" onclick="removeTempTask(${idx})">&times;</button>
+                </div>
+            `).join('');
+        }
+
+        window.removeTempTask = function(idx) {
+            tempTasks.splice(idx, 1);
+            renderTempTasks();
+        };
+
+        // Temp Tags listing
+        function renderTempTags() {
+            const container = document.getElementById('tag-builder-items-list');
+            container.innerHTML = tempTags.map((tag, idx) => `
+                <span class="tag-pill" style="display: flex; align-items: center; gap: 4px;">
+                    ${escapeHtml(tag)}
+                    <button type="button" class="list-builder-remove-btn" style="color:var(--text-muted); font-size:0.75rem;" onclick="removeTempTag(${idx})">&times;</button>
+                </span>
+            `).join('');
+        }
+
+        window.removeTempTag = function(idx) {
+            tempTags.splice(idx, 1);
+            renderTempTags();
+        };
+
+        // Edit Log Action
+        window.startEditLog = function(id) {
+            const item = appData.items.find(i => i.id === id);
+            if (!item) return;
+
+            editingItemId = id;
+            document.getElementById('log-date').value = item.date;
+            document.getElementById('log-category').value = item.category;
+            document.getElementById('log-theme').value = item.theme || 'default';
+            document.getElementById('log-title').value = item.title;
+            document.getElementById('log-desc').value = item.description;
+            
+            tempTasks = [...(item.tasks || [])];
+            tempTags = [...(item.tags || [])];
+            
+            renderTempTasks();
+            renderTempTags();
+
+            document.getElementById('form-heading').textContent = "Edit Log Entry";
+            document.getElementById('btn-save-log').textContent = "Save Log Changes";
+            document.getElementById('btn-cancel-edit').style.display = 'block';
+
+            // Trigger Tab Switch to Form
+            document.getElementById('tab-form-trigger').click();
+        };
+
+        function cancelEdit() {
+            editingItemId = null;
+            document.getElementById('log-date').value = '';
+            document.getElementById('log-category').value = '';
+            document.getElementById('log-theme').value = 'default';
+            document.getElementById('log-title').value = '';
+            document.getElementById('log-desc').value = '';
+            tempTasks = [];
+            tempTags = [];
+            
+            renderTempTasks();
+            renderTempTags();
+
+            document.getElementById('form-heading').textContent = "Add New Log";
+            document.getElementById('btn-save-log').textContent = "Add Log to Timeline";
+            document.getElementById('btn-cancel-edit').style.display = 'none';
+        }
+
+        // Delete Log Action
+        window.deleteLog = function(id) {
+            const idx = appData.items.findIndex(i => i.id === id);
+            if (idx === -1) return;
+
+            const item = appData.items[idx];
+            if (confirm(`Are you sure you want to delete the log for "${item.title}" (${item.date})?`)) {
+                appData.items.splice(idx, 1);
+                renderApp();
+                renderManageLogsList();
+                showToast("Log entry deleted successfully", "success");
+            }
+        };
+
+        // Submit Add/Edit Form
+        function submitLogForm() {
+            const date = document.getElementById('log-date').value.trim();
+            const category = document.getElementById('log-category').value.trim();
+            const theme = document.getElementById('log-theme').value;
+            const title = document.getElementById('log-title').value.trim();
+            const description = document.getElementById('log-desc').value.trim();
+
+            if (!date || !title) {
+                alert("Date and Title are required fields!");
+                return;
+            }
+
+            const logPayload = {
+                id: editingItemId || `item-${Date.now()}`,
+                date,
+                category: category || "General",
+                theme,
+                title,
+                description,
+                tasks: [...tempTasks],
+                tags: [...tempTags]
+            };
+
+            if (editingItemId) {
+                // Update
+                const idx = appData.items.findIndex(i => i.id === editingItemId);
+                if (idx !== -1) {
+                    appData.items[idx] = logPayload;
+                }
+                showToast("Log entry updated successfully", "success");
+            } else {
+                // Insert new log
+                appData.items.push(logPayload);
+                showToast("New log added to timeline", "success");
+            }
+
+            // Resort timeline logs reverse-chronologically by date
+            appData.items.sort((a, b) => parseDate(b.date) - parseDate(a.date));
+
+            cancelEdit();
+            renderApp();
+            
+            // Switch back to manage list tab to see changes
+            document.querySelectorAll('.admin-tab-btn')[1].click();
+        }
+
+        // Toast Messages
+        function showToast(msg, type = '') {
+            const toast = document.getElementById('toast-message');
+            toast.textContent = msg;
+            
+            if (type === 'success') {
+                toast.classList.add('toast-success');
+            } else {
+                toast.classList.remove('toast-success');
+            }
+            
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Export/Save self-updating HTML file
+        function saveAndDownloadHtml() {
+            // First, close Admin panel and overlay so downloaded HTML doesn't look open
+            const adminPanel = document.getElementById('admin-panel');
+            const overlay = document.getElementById('admin-overlay');
+            
+            adminPanel.classList.remove('open');
+            overlay.classList.remove('open');
+
+            // Reset search input and reload full manage logs list
+            document.getElementById('log-search').value = '';
+            renderManageLogsList();
+
+            // Clear temporary form values from input fields so download doesn't contain clutter
+            cancelEdit();
+
+            // Store final JSON inside target script tag in the DOM
+            const dataElement = document.getElementById('timeline-data');
+            dataElement.textContent = '\n' + JSON.stringify(appData, null, 2) + '\n    ';
+
+            // Gather full code
+            const finalCode = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+
+            // Trigger Browser File Download
+            const blob = new Blob([finalCode], { type: 'text/html;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const downloadLink = document.createElement('a');
+            downloadLink.href = url;
+            downloadLink.download = 'index.html';
+            
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+            URL.revokeObjectURL(url);
+            
+            showToast("index.html downloaded successfully!", "success");
+        }
+
+        // Simple HTML Escaper
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
 </body>
 </html>
