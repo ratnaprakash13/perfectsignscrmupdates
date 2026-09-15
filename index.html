@@ -1038,43 +1038,62 @@
     <!-- JSON Data Store containing all timeline logs -->
     <script id="timeline-data" type="application/json">
 {
-  "projectTitle": "Perfect Signs CRM & Portals",
-  "clientInfo": "Project: CRM Integrations, Multi-sites & Custom Invoicing",
+  "projectTitle": "Perfect Signs Portals & CRM Ecosystem",
+  "clientInfo": "Project: RCM Medical Billing, CRM Portals & Invoicing Integration",
   "clientAvatar": "P",
   "status": "Completed & Deployed",
-  "progress": 95,
-  "timelineTitle": "August 2026 Daily Progress & Invoices Integration Timeline",
+  "progress": 100,
+  "timelineTitle": "August 2026 Daily Progress & Milestone Timeline (30 Working Days)",
   "items": [
     {
-      "id": "aug-21",
-      "date": "Aug 31, 2026",
+      "id": "aug-30",
+      "date": "Aug 30, 2026",
       "category": "Invoicing Integration",
-      "title": "Invoices WebAPI Direct CRM Credentials Integration",
-      "description": "Configured the CRM to use the Invoices WebAPI directly as the single source of truth for customer credentials, eliminating duplicate databases and establishing unified authentication.",
+      "title": "Invoices Angular Navbar Badges, Feature Gating & Quota Gating",
+      "description": "Added live invoice quota badges and locked feature indicators (Dashboard 🔒, Reports 🔒) in navbar, integrated 1-click upgrade modal, and verified SSO routing for Free and Pro users.",
       "theme": "default",
       "tasks": [
-        "Connected CRM login and signup components directly to Invoices WebAPI (/api/auth/login, /api/auth/register)",
-        "Implemented unified customer account provisioning with Free trial defaults in PostgreSQL",
-        "Configured seamless Single Sign-On (SSO) session launching between CRM and Invoices frontend"
+        "Added live invoice quota badges and locked feature indicators (Dashboard 🔒, Reports 🔒) in navbar",
+        "Integrated Upgrade Modal into invoices app for 1-click Pro ($3 CAD) and Unlimited ($5 CAD) upgrades",
+        "Tested seamless SSO redirect directing Free customers to invoice creation and Pro/Admin to dashboard"
       ],
       "tags": [
-        "WebAPI",
-        "PostgreSQL",
-        "SSO",
-        "Direct Auth"
+        "Angular 18",
+        "Feature Gating",
+        "Quota Badges",
+        "UX"
       ]
     },
     {
-      "id": "aug-20",
+      "id": "aug-29",
+      "date": "Aug 29, 2026",
+      "category": "CRM & Invoicing",
+      "title": "Single Sign-On (SSO) Session & Invoicing Hub in CRM Dashboard",
+      "description": "Implemented direct Invoicing Portal card in CRM dashboard with live quota progress bar and remaining counts, wired Launch Invoices App button with encrypted SSO credentials, and added upgrade modal.",
+      "theme": "purple-theme",
+      "tasks": [
+        "Implemented direct Invoicing Portal card in CRM dashboard with live quota progress bar and remaining counts",
+        "Built Launch Invoices App button passing encrypted SSO credentials for zero-friction login",
+        "Wired Upgrade Plan modal with $3 Pro and $5 Unlimited subscription tiers directly in CRM"
+      ],
+      "tags": [
+        "SSO",
+        "Dashboard",
+        "Angular 22",
+        "Invoicing Hub"
+      ]
+    },
+    {
+      "id": "aug-28",
       "date": "Aug 28, 2026",
       "category": "Subscription & Quota",
       "title": "Multi-Tier Subscription & Quota Enforcement Engine",
-      "description": "Engineered database schema and backend middleware to enforce the 3-invoice free tier, $3 CAD Pro tier (200 invoices/mo), and $5 CAD Unlimited tier.",
-      "theme": "purple-theme",
+      "description": "Engineered database schema and backend middleware to enforce the 3-invoice free tier, $3 CAD Pro tier (200 invoices/mo), and $5 CAD Unlimited tier with automatic HTTP 403 blocking.",
+      "theme": "green-theme",
       "tasks": [
-        "Added subscription_tier, billing_cycle_start, and quota tracking columns to app_users",
+        "Added subscription_tier, billing_cycle_start, and quota tracking columns to app_users table in PostgreSQL",
         "Implemented quota validation in InvoiceService.cs rejecting requests over limit with HTTP 403 Forbidden",
-        "Created upgrade-subscription endpoint supporting 1-click Pro and Unlimited plan activations"
+        "Created /api/auth/upgrade-subscription endpoint supporting Pro ($3/200 inv) and Unlimited ($5) activations"
       ],
       "tags": [
         ".NET 9",
@@ -1084,1094 +1103,518 @@
       ]
     },
     {
-      "id": "aug-19",
+      "id": "aug-27",
       "date": "Aug 27, 2026",
-      "category": "Frontend & UX",
-      "title": "Invoicing Portal Hub Card & Upgrade Modal in CRM",
-      "description": "Designed and styled a high-converting Invoicing Portal card inside the CRM dashboard showing plan tier, remaining invoice progress bar, and upgrade options.",
-      "theme": "green-theme",
+      "category": "Invoicing WebAPI",
+      "title": "Direct CRM Customer Credentials & Auth Architecture",
+      "description": "Connected CRM login and signup components directly to Invoices WebAPI endpoints, configured unified customer account provisioning with Free trial default, and resolved base URL status routing.",
+      "theme": "default",
       "tasks": [
-        "Built Invoicing Hub dashboard card with dynamic quota progress bar and plan badge",
-        "Created responsive Upgrade Plan modal with $3 CAD (200 invoices) and $5 CAD (Unlimited) selectors",
-        "Wired real-time profile polling to refresh remaining invoice counts on user action"
+        "Connected CRM login and signup components directly to Invoices WebAPI endpoints (/api/auth/login, /api/auth/register)",
+        "Configured unified customer account provisioning with Free trial default (3 lifetime invoices)",
+        "Implemented root status endpoint (/) to prevent 404 responses and configured CORS for CRM origins"
       ],
       "tags": [
-        "Angular 22",
-        "Dashboard",
-        "UI/UX",
-        "Pricing Modal"
+        "WebAPI",
+        "PostgreSQL",
+        "Direct Auth",
+        "CORS"
       ]
     },
     {
-      "id": "aug-18",
+      "id": "aug-26",
       "date": "Aug 26, 2026",
-      "category": "Security & Multi-Tenancy",
-      "title": "Multi-Tenant User Scoping & HTTP Auth Interceptor",
-      "description": "Isolated customer data across invoices and clients tables using foreign key user_id scoping, and built an Angular HTTP interceptor for automatic header injection.",
-      "theme": "default",
+      "category": "Database & Security",
+      "title": "Multi-Tenant Data Scoping & Client Isolation",
+      "description": "Migrated PostgreSQL database adding user_id foreign keys to invoices and clients tables, scoped all queries strictly by authenticated user_id, and created Angular AuthInterceptor.",
+      "theme": "purple-theme",
       "tasks": [
-        "Created AuthInterceptor in perfectsignsbanners to inject X-User-Id and X-User-Role on all API calls",
-        "Updated InvoicesController and ClientsController to scope records to the requesting customer",
-        "Maintained global access permissions for Administrator accounts across all clients and invoices"
+        "Migrated PostgreSQL database adding user_id foreign keys to invoices and clients tables",
+        "Scoped all queries in InvoiceService and ClientService strictly by authenticated user_id",
+        "Created Angular AuthInterceptor injecting X-User-Id and X-User-Role headers on all outgoing requests"
       ],
       "tags": [
-        "Security",
         "Multi-Tenancy",
-        "HttpInterceptor",
+        "PostgreSQL",
+        "AuthInterceptor",
         "Data Isolation"
       ]
     },
     {
-      "id": "aug-17",
+      "id": "aug-25",
       "date": "Aug 25, 2026",
-      "category": "Frontend & Navigation",
-      "title": "Invoices App SSO Intake & Navbar Feature Locks",
-      "description": "Configured the Invoices Angular frontend to accept SSO session query parameters and lock advanced features (Dashboard, Reports, Expenses) for Free tier users.",
-      "theme": "purple-theme",
-      "tasks": [
-        "Added query param listener for ?sso_email and ?sso_user in LoginComponent to auto-authenticate",
-        "Added feature lock badges (🔒) on navigation items with click-to-upgrade modal prompts",
-        "Routed Free tier users directly to the invoice creator while routing Pro users to the analytics dashboard"
-      ],
-      "tags": [
-        "Angular",
-        "Routing",
-        "SSO",
-        "Feature Gating"
-      ]
-    },
-    {
-      "id": "aug-16",
-      "date": "Aug 24, 2026",
-      "category": "WebAPI Infrastructure",
-      "title": "WebAPI Root Status Endpoint & CORS Origin Whitelisting",
-      "description": "Resolved base URL 404 errors by adding a root JSON status endpoint, and whitelisted CRM and Banner portal domains in ASP.NET Core CORS policy.",
+      "category": "Invoicing WebAPI",
+      "title": "ASP.NET Core 9 WebAPI Multi-Tier Schema & Models",
+      "description": "Extended AuthModels.cs with AuthUserDto, SsoLoginRequest, and UpdateSubscriptionRequest models, configured DatabaseInitializer.cs for automated migrations, and built quota calculation methods.",
       "theme": "green-theme",
       "tasks": [
-        "Mapped root endpoint '/' returning online status, timestamp, and active endpoint sitemap",
-        "Expanded CORS policy to allow crm.perfectsignscanada.com, banners.perfectsignscanada.com, and local dev ports",
-        "Verified clean dotnet build and OpenAPI specification endpoints"
+        "Extended AuthModels.cs with AuthUserDto, SsoLoginRequest, and UpdateSubscriptionRequest models",
+        "Configured DatabaseInitializer.cs for automated schema migrations on app startup",
+        "Built automated quota calculation methods tracking monthly billing cycles and remaining allowances"
       ],
       "tags": [
-        "CORS",
-        "IIS Express",
-        "ASP.NET Core",
-        "Endpoints"
+        ".NET 9",
+        "C#",
+        "DatabaseInitializer",
+        "AuthModels"
       ]
     },
     {
-      "id": "aug-15",
-      "date": "Aug 21, 2026",
-      "category": "CMS & Layout Builder",
-      "title": "GrapesJS Page Layout Engine & Razor View Compilation",
-      "description": "Refined drag-and-drop page builder in Perfect Signs CRM to compile clean Razor CSHTML views with responsive grid layouts and custom branding blocks.",
+      "id": "aug-24",
+      "date": "Aug 24, 2026",
+      "category": "SEO & Growth",
+      "title": "Comprehensive SEO, OpenGraph & Schema.org Structured Data",
+      "description": "Optimized title tags and high-intent commercial meta descriptions for Calgary and Edmonton, embedded OpenGraph and Twitter Cards social metadata, and integrated Schema.org JSON-LD microdata.",
       "theme": "default",
       "tasks": [
-        "Integrated GrapesJS block manager for custom banner showcases and quote inquiry forms",
-        "Optimized Razor view compiler to output clean .cshtml templates to Home views folder",
-        "Added automatic CSS bundling and asset path normalization for live IIS hosting"
+        "Optimized title tags and high-intent commercial meta descriptions for Calgary, Edmonton, and Alberta",
+        "Embedded OpenGraph and Twitter Cards social metadata for rich link previews across social platforms",
+        "Integrated Schema.org JSON-LD microdata for LocalBusiness, SignShop, and ProfessionalService with service catalog"
       ],
       "tags": [
-        "GrapesJS",
-        "Razor CSHTML",
-        "Angular",
-        "Page Builder"
+        "SEO",
+        "JSON-LD",
+        "OpenGraph",
+        "LocalBusiness"
       ]
     },
     {
-      "id": "aug-14",
-      "date": "Aug 20, 2026",
-      "category": "Storage & Assets",
-      "title": "AWS S3 Cloud Storage Integration for Invoice PDFs",
-      "description": "Implemented automated PDF generation and AWS S3 cloud archiving service for customer invoices and custom signage mockups.",
+      "id": "aug-23",
+      "date": "Aug 23, 2026",
+      "category": "Cloud & Serverless",
+      "title": "Parallel AWS Serverless WebAPI Lead Dispatch Integration",
+      "description": "Wired inquiry submission pipeline to AWS API Gateway serverless ContactUs endpoint in parallel with asynchronous error isolation ensuring reliable lead delivery.",
       "theme": "purple-theme",
       "tasks": [
-        "Built S3InvoiceService.cs with AWS SDK for pre-signed upload URL generation",
-        "Wired client-side pdfService to render high-resolution print invoices via html2canvas and jsPDF",
-        "Stored persistent S3 URLs in PostgreSQL invoices table with sync status auditing"
+        "Wired inquiry submission pipeline to AWS API Gateway serverless ContactUs endpoint in parallel",
+        "Formatted unified JSON payload containing client contact, selected services, and project notes",
+        "Added asynchronous error isolation ensuring serverless dispatch failures do not block user confirmations"
       ],
       "tags": [
-        "AWS S3",
-        "PDF Generation",
-        "Cloud Storage",
-        "C#"
+        "AWS Serverless",
+        "API Gateway",
+        "Dotnet Lambda",
+        "Integration"
       ]
     },
     {
-      "id": "aug-13",
-      "date": "Aug 19, 2026",
-      "category": "Notification & Email",
-      "title": "AWS SES SMTP Email Dispatch for Invoices & OTPs",
-      "description": "Configured Amazon Simple Email Service (SES) SMTP credentials and templates for sending customer invoices, payment receipts, and password reset OTPs.",
+      "id": "aug-22",
+      "date": "Aug 22, 2026",
+      "category": "Email Automation",
+      "title": "Dual SMTP Email Dispatch & Inquiry Reference Tracking",
+      "description": "Configured dual email notifications via AWS SES SMTP with admin alerts, customer branded confirmations, hidden BCC to support, and dynamic Inquiry Reference ID generation.",
       "theme": "green-theme",
       "tasks": [
-        "Built EmailService.cs in ASP.NET Core using MailKit/MimeKit over TLS port 2587",
-        "Constructed HTML email templates for invoice notifications with direct download links",
-        "Implemented cryptographic OTP generator with 10-minute validity for account recovery"
+        "Configured dual email notification via AWS SES SMTP: admin alert and customer branded HTML confirmation",
+        "Included hidden BCC to support team (info@yiskasolutions.com) with zero footprint visible to clients",
+        "Generated unique Inquiry Reference IDs (inq-xxxxxxxx) returned to frontend for customer tracking"
       ],
       "tags": [
         "AWS SES",
-        "SMTP",
-        "Email",
-        "Security"
+        "Nodemailer",
+        "BCC Hidden",
+        "Email Engine"
       ]
     },
     {
-      "id": "aug-12",
-      "date": "Aug 18, 2026",
-      "category": "Client Management",
-      "title": "Client Directory & Customer Management Module",
-      "description": "Developed full CRUD client directory in Invoices app allowing signage businesses to track repeat clients, contact details, and billing terms.",
+      "id": "aug-21",
+      "date": "Aug 21, 2026",
+      "category": "Frontend & Forms",
+      "title": "Custom Quote & Service Inquiry Form System",
+      "description": "Developed multi-category inquiry component covering 3D Signages and Digital Marketing services with dynamic write-in specification boxes and contact method selectors.",
       "theme": "default",
       "tasks": [
-        "Implemented ClientService.cs with search, ordering, and last-invoice query helpers",
-        "Built reactive Angular client forms with instant validation and auto-fill in invoice creation",
-        "Scoped client database records to user_id to maintain multi-tenant client confidentiality"
+        "Developed multi-category inquiry component covering 3D Signages and Digital Marketing services",
+        "Added dynamic write-in specification boxes for custom requirements and dimensions",
+        "Implemented preferred contact method selector (Phone, Email, WhatsApp) and best contact time slots"
       ],
       "tags": [
-        "Clients",
-        "Angular Forms",
-        "PostgreSQL",
-        "CRUD"
-      ]
-    },
-    {
-      "id": "aug-11",
-      "date": "Aug 17, 2026",
-      "category": "Financial Tracking",
-      "title": "Business Expense Tracker & Transaction Logging",
-      "description": "Created dedicated business expense tracking system for tracking print materials, hardware, vinyl supplies, and operational overhead.",
-      "theme": "purple-theme",
-      "tasks": [
-        "Implemented expenses table in PostgreSQL with date range constraints and amount validations",
-        "Built ExpenseService.cs supporting Pending and Paid status transitions and transaction logging",
-        "Created expense filtering UI with date picker ranges and category tags"
-      ],
-      "tags": [
-        "Expenses",
-        "PostgreSQL",
-        "Accounting",
-        "Data Models"
-      ]
-    },
-    {
-      "id": "aug-10",
-      "date": "Aug 14, 2026",
-      "category": "Financial Reports",
-      "title": "Financial Analytics & Monthly Revenue Reporting",
-      "description": "Built graphical financial dashboard and exportable revenue reports summarizing invoice collections, outstanding balances, and gross margins.",
-      "theme": "green-theme",
-      "tasks": [
-        "Created monthly revenue aggregation queries grouped by invoice status and client",
-        "Implemented visual revenue breakdown charts in ReportsComponent",
-        "Added CSV export capability for accountant tax audits and bookkeeper reviews"
-      ],
-      "tags": [
-        "Analytics",
-        "Reporting",
-        "Charts",
-        "Revenue"
-      ]
-    },
-    {
-      "id": "aug-9",
-      "date": "Aug 13, 2026",
-      "category": "Support & Helpdesk",
-      "title": "Customer Support Ticket System in CRM",
-      "description": "Integrated support ticket lifecycle module in CRM portal allowing customers to submit inquiries, file bug reports, and track technical assistance.",
-      "theme": "default",
-      "tasks": [
-        "Created /api/tickets REST endpoints in Node.js Express backend with JSON file storage",
-        "Built threaded chat message interface for support ticket discussions between client and staff",
-        "Added status management (Open, In Progress, Resolved, Closed) and priority flags"
-      ],
-      "tags": [
-        "Support Tickets",
-        "Node.js",
-        "Express",
-        "Helpdesk"
-      ]
-    },
-    {
-      "id": "aug-8",
-      "date": "Aug 12, 2026",
-      "category": "Infrastructure & PM2",
-      "title": "PM2 Server Process Cluster & Memory Optimization",
-      "description": "Configured PM2 process supervisor with strict memory restart rules to ensure high availability on resource-constrained Windows server VMs.",
-      "theme": "purple-theme",
-      "tasks": [
-        "Configured pm2 start with --max-memory-restart 150M and --max-old-space-size=120",
-        "Added automated log rotation to prevent access.log file growth from degrading server I/O",
-        "Tested automatic process resurrection after system restarts and uncaught exceptions"
-      ],
-      "tags": [
-        "PM2",
-        "Node.js",
-        "Memory Management",
-        "DevOps"
-      ]
-    },
-    {
-      "id": "aug-7",
-      "date": "Aug 11, 2026",
-      "category": "IIS & Reverse Proxy",
-      "title": "IIS URL Rewrite & ARR Reverse Proxy Integration",
-      "description": "Set up IIS Application Request Routing (ARR) and URL Rewrite rules for crm.perfectsignscanada.com on Port 80/443 proxying requests to local backend services.",
-      "theme": "green-theme",
-      "tasks": [
-        "Configured web.config reverse proxy rules routing /api and /uploads to Node backend on port 3000",
-        "Configured HTTPS bindings and dedicated hostname routing to eliminate Port 80 conflicts",
-        "Validated HTML5 Angular client-side pushState URL rewrite fallback rules"
-      ],
-      "tags": [
-        "IIS",
-        "URL Rewrite",
-        "ARR",
-        "Reverse Proxy"
-      ]
-    },
-    {
-      "id": "aug-6",
-      "date": "Aug 10, 2026",
-      "category": "Catalog & Products",
-      "title": "Signage & Banner Services Catalog Scaffolding",
-      "description": "Built public services catalog showcasing Perfect Signs product offerings, pricing tiers, vehicle wraps, neon signage, and banner designs.",
-      "theme": "default",
-      "tasks": [
-        "Implemented ServicesCatalogComponent with responsive category filtering",
-        "Added interactive service selection checklist syncing with quotation requests",
-        "Designed high-contrast dark theme UI matching Perfect Signs visual identity"
-      ],
-      "tags": [
-        "Product Catalog",
-        "Angular",
-        "CSS3",
-        "Design"
-      ]
-    },
-    {
-      "id": "aug-5",
-      "date": "Aug 7, 2026",
-      "category": "Quotes & Leads",
-      "title": "Dynamic Signage Quote Request & Inquiry Form",
-      "description": "Constructed multi-step signage inquiry and quote builder allowing prospective clients to request custom measurements and upload artwork.",
-      "theme": "purple-theme",
-      "tasks": [
-        "Built ServiceInquiryFormComponent with step-by-step service checklist and contact preferences",
-        "Connected form submission to Express backend /api/inquiries endpoint",
-        "Added email notification triggers for sales team follow-up on new quote requests"
-      ],
-      "tags": [
-        "Inquiry Form",
-        "Lead Capture",
-        "Quotes",
-        "Angular"
-      ]
-    },
-    {
-      "id": "aug-4",
-      "date": "Aug 6, 2026",
-      "category": "CI/CD & Automation",
-      "title": "Automated PowerShell Deployment Script (deploy_crm.ps1)",
-      "description": "Authored deploy_crm.ps1 to automate frontend Angular compilation, backend packaging, PM2 restarts, and IIS webroot synchronization in one step.",
-      "theme": "green-theme",
-      "tasks": [
-        "Wrote automated PowerShell pipeline script to build Angular app with production budgets",
-        "Automated backend dependency checks, PM2 process reload, and IIS directory publishing",
-        "Added pre-deployment validation tests to ensure zero-downtime releases"
-      ],
-      "tags": [
-        "PowerShell",
-        "Automation",
-        "CI/CD",
-        "Deployment"
-      ]
-    },
-    {
-      "id": "aug-3",
-      "date": "Aug 5, 2026",
-      "category": "Database Architecture",
-      "title": "PostgreSQL Connection Pooling & Resilience Configuration",
-      "description": "Configured NpgsqlDataSource singleton connection pooling in ASP.NET Core with automatic retry policies for high-volume remote database operations.",
-      "theme": "default",
-      "tasks": [
-        "Registered NpgsqlDataSource singleton in Program.cs with optimized connection limits",
-        "Created DatabaseInitializer.cs with idempotent DDL migrations for users, expenses, and invoices",
-        "Whitelisted production server IP address on PostgreSQL remote database firewall"
-      ],
-      "tags": [
-        "PostgreSQL",
-        "Npgsql",
-        "Connection Pooling",
-        "C#"
-      ]
-    },
-    {
-      "id": "aug-2",
-      "date": "Aug 4, 2026",
-      "category": "Security & Auth",
-      "title": "Password Hashing with PGCrypto & Salt Generation",
-      "description": "Hardened authentication security in PostgreSQL using Blowfish crypt() salting and verification for user credentials and password recovery OTPs.",
-      "theme": "purple-theme",
-      "tasks": [
-        "Enabled pgcrypto extension on perfectsignsinvoices database schema",
-        "Implemented secure password hashing using gen_salt('bf') and crypt() comparisons",
-        "Added index optimization on username and email columns for sub-millisecond lookups"
-      ],
-      "tags": [
-        "Security",
-        "pgcrypto",
-        "Hashing",
-        "PostgreSQL"
-      ]
-    },
-    {
-      "id": "aug-1",
-      "date": "Aug 3, 2026",
-      "category": "Sprint Planning",
-      "title": "August Development Sprint Planning & Invoicing Roadmap",
-      "description": "Drafted architectural blueprint for integrating the standalone Invoices WebAPI with Perfect Signs CRM, establishing multi-tier pricing and SSO workflows.",
-      "theme": "green-theme",
-      "tasks": [
-        "Defined quota specifications: 3 Free trial invoices, 200 Pro invoices ($3 CAD), and Unlimited ($5 CAD)",
-        "Mapped user journey from CRM signup to seamless invoices app launch without code duplication",
-        "Established technical milestones for August database migrations, API controllers, and frontend hubs"
-      ],
-      "tags": [
-        "Architecture",
-        "Roadmap",
-        "Specifications",
-        "Sprint Planning"
-      ]
-    },
-    {
-      "id": "july-1",
-      "date": "Jul 31, 2026",
-      "category": "Infrastructure",
-      "title": "Production Deployment & SSL Binding",
-      "description": "Verified HTTPS SSL certificates, cleared debug logs, and performed the final deployment sign-off for the July CRM update.",
-      "theme": "default",
-      "tasks": [
-        "Verified SSL bindings and server response headers on IIS",
-        "Performed post-deployment routing and sanity tests on crm.perfectsignscanada.com"
-      ],
-      "tags": [
-        "IIS",
-        "SSL",
-        "Production"
-      ]
-    },
-    {
-      "id": "july-2",
-      "date": "Jul 30, 2026",
-      "category": "Infrastructure",
-      "title": "Technical Release Notes & Client Guide",
-      "description": "Authored release notes detailing image size boundaries and compiled usage guides for the daycare administration.",
-      "theme": "purple-theme",
-      "tasks": [
-        "Wrote client-facing documentation explaining image optimization limits",
-        "Sent WhatsApp and email updates to client detailing the CRM resolution"
-      ],
-      "tags": [
-        "Documentation",
-        "Release Notes"
-      ]
-    },
-    {
-      "id": "july-3",
-      "date": "Jul 29, 2026",
-      "category": "Bug Fixes",
-      "title": "Bug Fix: Image Upload Bundler Crash",
-      "description": "Resolved critical Vite compiler crashes triggered when clients uploaded uncompressed high-resolution images to daycare pages.",
-      "theme": "green-theme",
-      "tasks": [
-        "Added client-side image size warnings and asset compression rules",
-        "Fixed CSS style shifts caused by un-optimized media wrappers"
-      ],
-      "tags": [
-        "Vite",
-        "Assets",
-        "SCSS"
-      ]
-    },
-    {
-      "id": "july-4",
-      "date": "Jul 28, 2026",
-      "category": "Bug Fixes",
-      "title": "Zero-Downtime Fallback Configuration",
-      "description": "Configured secondary fallback templates to keep the registration page accessible during code deployments.",
-      "theme": "default",
-      "tasks": [
-        "Wrote routing redirects to load cached static templates on error",
-        "Monitored live registration telemetry to verify zero-downtime transition"
-      ],
-      "tags": [
-        "Routing",
-        "Fallback",
-        "Availability"
-      ]
-    },
-    {
-      "id": "july-5",
-      "date": "Jul 27, 2026",
-      "category": "Bug Fixes",
-      "title": "Bug Fix: Daycare Registration Submit Failure",
-      "description": "Fixed a critical submission block in crm.perfectsignscanada.com where mobile registration forms failed to submit on iOS.",
-      "theme": "green-theme",
-      "tasks": [
-        "Patched event listener defaults for touch and tap actions in React",
-        "Tested the customer registration form workflow on iPhone and iPad Safari"
-      ],
-      "tags": [
-        "React",
-        "iOS Safari",
-        "Form Validation"
-      ]
-    },
-    {
-      "id": "july-6",
-      "date": "Jul 24, 2026",
-      "category": "Database",
-      "title": "Daycare CRM Page Sync & JSON Mappings",
-      "description": "Mapped client-created pages inside the CRM to the dynamic configuration controller, ensuring newly added pages sync properly.",
-      "theme": "default",
-      "tasks": [
-        "Updated page sync routes in LespetitsController.cs",
-        "Corrected pages.json mapping errors to sync client dashboards dynamically"
-      ],
-      "tags": [
-        ".NET 10",
-        "C#",
-        "pages.json"
-      ]
-    },
-    {
-      "id": "july-7",
-      "date": "Jul 23, 2026",
-      "category": "Bug Fixes",
-      "title": "Bug Fix: Daycare CRM Publish Error",
-      "description": "Investigated issues where compiled assets (index.html, JS, images) were missing from the production build dist folder during publishes.",
-      "theme": "green-theme",
-      "tasks": [
-        "Debugged msbuild post-build task execution paths",
-        "Corrected path copying directories for index and assets in publish script"
-      ],
-      "tags": [
-        "MSBuild",
-        "Publishing",
-        "Fix"
-      ]
-    },
-    {
-      "id": "july-8",
-      "date": "Jul 22, 2026",
-      "category": "Infrastructure",
-      "title": "CRM Subdomain Routing Proxy",
-      "description": "Configured IIS URL Rewrite rules to safely proxy incoming requests from crm.perfectsignscanada.com to the backend REST API.",
-      "theme": "default",
-      "tasks": [
-        "Programmed reverse proxy rules in web.config",
-        "Verified token authorization headers are forwarded cleanly through the proxy"
-      ],
-      "tags": [
-        "IIS",
-        "URL Rewrite",
-        "Proxy"
-      ]
-    },
-    {
-      "id": "july-9",
-      "date": "Jul 21, 2026",
-      "category": "Frontend",
-      "title": "CRM Bundler Optimizations",
-      "description": "Configured production compiler settings to bundle block sections together, reducing file load times.",
-      "theme": "purple-theme",
-      "tasks": [
-        "Configured custom Webpack chunk splitting for the page builder",
-        "Added lazy loading for complex editor blocks"
-      ],
-      "tags": [
-        "Webpack",
-        "Vite",
-        "Performance"
-      ]
-    },
-    {
-      "id": "july-10",
-      "date": "Jul 20, 2026",
-      "category": "Frontend",
-      "title": "CRM Editor Help & Guides Integration",
-      "description": "Designed and integrated a beautiful, visual Help Guide explaining editor blocks, style controls, and layer managers.",
-      "theme": "purple-theme",
-      "tasks": [
-        "Coded interactive sidebar listing editor layout instructions",
-        "Designed responsive walkthrough guides for client administrator use"
-      ],
-      "tags": [
-        "React",
-        "HTML",
-        "UI Guide"
-      ]
-    },
-    {
-      "id": "july-11",
-      "date": "Jul 17, 2026",
-      "category": "Frontend",
-      "title": "Navbar & Footer WYSIWYG Editor",
-      "description": "Enabled custom client editing of global website layout headers and footers directly from the CRM editor panel.",
-      "theme": "default",
-      "tasks": [
-        "Exposed header and footer nodes as editable zones in the CRM UI",
-        "Integrated custom link-builder forms for navigation settings"
-      ],
-      "tags": [
-        "Vite",
-        "HTML5",
-        "Editor"
-      ]
-    },
-    {
-      "id": "july-12",
-      "date": "Jul 16, 2026",
-      "category": "Frontend",
-      "title": "Drag-and-Drop Registration Form Builder",
-      "description": "Implemented form block elements allowing client administrators to drag and drop checkboxes, dropdowns, and text inputs.",
-      "theme": "purple-theme",
-      "tasks": [
-        "Programmed drag-and-drop actions for form input blocks",
-        "Built responsive registration input layouts (radio buttons, selects)"
-      ],
-      "tags": [
-        "Vite React",
-        "Drag-Drop",
-        "Forms"
-      ]
-    },
-    {
-      "id": "july-13",
-      "date": "Jul 15, 2026",
-      "category": "Infrastructure",
-      "title": "IIS Directory Permission Locking",
-      "description": "Configured secure application directories and granted proper read/write access controls to the IIS_IUSRS worker group.",
-      "theme": "default",
-      "tasks": [
-        "Configured directory inheritances and resolved permission blocks on local folders",
-        "Verified security permissions on published web.config file paths"
-      ],
-      "tags": [
-        "IIS",
-        "Security",
-        "Windows Server"
-      ]
-    },
-    {
-      "id": "july-14",
-      "date": "Jul 14, 2026",
-      "category": "Infrastructure",
-      "title": "IIS Port Conflicts & Host Headers",
-      "description": "Resolved local server port conflicts on the IIS instance, allowing separate hostnames to share port 80/443 simultaneously.",
-      "theme": "purple-theme",
-      "tasks": [
-        "Configured distinct host headers in IIS bindings",
-        "Mapped separate web sites for frontend and backend server instances"
-      ],
-      "tags": [
-        "IIS",
-        "Ports",
-        "Bindings"
-      ]
-    },
-    {
-      "id": "july-15",
-      "date": "Jul 13, 2026",
-      "category": "Infrastructure",
-      "title": "Cloud Server Directory Scaffolding",
-      "description": "Set up server directory structures for deployment and whitelisted inbound connection ports on the cloud firewall.",
-      "theme": "default",
-      "tasks": [
-        "Created hosted directories under C:\\inetpub\\wwwroot\\perfectsignsreactweb",
-        "Verified server-side firewall configurations on the Windows server dashboard"
-      ],
-      "tags": [
-        "IIS",
-        "Windows Server",
-        "Firewall"
-      ]
-    },
-    {
-      "id": "july-16-invoice",
-      "date": "Jul 10, 2026",
-      "category": "Frontend",
-      "title": "Invoices Charting & Visual Dashboard",
-      "description": "Integrated chart display components in React to show dynamic billing data and invoices history.",
-      "theme": "purple-theme",
-      "tasks": [
-        "Implemented chart UI wrappers using Chart.js libraries",
-        "Connected components to active C# controller data streams"
-      ],
-      "tags": [
-        "React",
-        "Chart.js",
-        "Dashboard"
-      ]
-    },
-    {
-      "id": "july-17-invoice",
-      "date": "Jul 09, 2026",
-      "category": "Backend",
-      "title": "Invoices Graph Data API Controller",
-      "description": "Programmed backend controller endpoints to aggregate billing records, returning chart-friendly JSON payloads.",
-      "theme": "default",
-      "tasks": [
-        "Wrote aggregation query methods in AuthService.cs",
-        "Exposed dashboard REST endpoints returning formatted datasets"
-      ],
-      "tags": [
-        ".NET 10",
-        "REST",
-        "C#"
-      ]
-    },
-    {
-      "id": "july-18-invoice",
-      "date": "Jul 08, 2026",
-      "category": "Backend",
-      "title": "SMTP Email Client Wrapper",
-      "description": "Configured SMTP settings and developed mail dispatch wrappers for automated billing notifications.",
-      "theme": "purple-theme",
-      "tasks": [
-        "Configured MailKit client details with server credentials",
-        "Wrote transactional email notification triggers on invoice generation"
-      ],
-      "tags": [
-        "SMTP",
-        "C#",
-        "MailKit"
-      ]
-    },
-    {
-      "id": "july-19-invoice",
-      "date": "Jul 07, 2026",
-      "category": "Backend",
-      "title": "CRM Password Settings Panel",
-      "description": "Created secure settings API controllers to allow client administrators to change accounts credentials.",
-      "theme": "default",
-      "tasks": [
-        "Coded password reset routes inside AuthController.cs",
-        "Implemented secure salting and hashing validations for updates"
-      ],
-      "tags": [
-        ".NET 10",
-        "Security",
-        "C#"
-      ]
-    },
-    {
-      "id": "july-20-invoice",
-      "date": "Jul 06, 2026",
-      "category": "Database",
-      "title": "PostgreSQL Schema Entity Mappings",
-      "description": "Resolved PostgreSQL database configuration errors related to missing user relation tables.",
-      "theme": "green-theme",
-      "tasks": [
-        "Fixed app_users mapping definitions in AppDbContext",
-        "Ran EF Core migrations to ensure correct Postgres table schema alignments"
-      ],
-      "tags": [
-        "EF Core",
-        "Postgres",
-        "Debugging"
-      ]
-    },
-    {
-      "id": "july-21-invoice",
-      "date": "Jul 03, 2026",
-      "category": "Frontend",
-      "title": "Testimonials Scrolling Marquee",
-      "description": "Developed a smooth horizontal scrolling layout showing realistic client reviews.",
-      "theme": "green-theme",
-      "tasks": [
-        "Wrote custom CSS keyframe animations for slow marquee scrolls",
-        "Added page enter transitions to all navigation subpages"
-      ],
-      "tags": [
-        "CSS",
-        "Animations",
+        "Angular 22",
+        "Service Inquiry",
+        "Forms",
         "UI/UX"
       ]
     },
     {
-      "id": "july-22-invoice",
-      "date": "Jul 02, 2026",
-      "category": "Frontend",
-      "title": "Branding & Aesthetic Enhancements",
-      "description": "Refined typography sizes, brightened colors, and enlarged client brand logos for premium look.",
+      "id": "aug-20",
+      "date": "Aug 20, 2026",
+      "category": "Digital Marketing",
+      "title": "Digital Marketing & SEO Service Catalog Architecture",
+      "description": "Structured marketing service packages for WhatsApp Bots, Meta Paid Video Ads, Google Maps 3-Pack, and Organic SEO with deliverables, specifications, and pricing tiers.",
       "theme": "purple-theme",
       "tasks": [
-        "Adjusted request-a-quote button contrast and color styling",
-        "Updated layout sizes for the Trusted By client logo banner"
+        "Structured marketing service packages: WhatsApp Bots, Meta Paid Video Ads, Google Maps 3-Pack, Organic SEO",
+        "Crafted high-converting service descriptions, deliverables, specifications, and pricing tiers",
+        "Embedded interactive quotation request links pre-filtering selected marketing categories"
       ],
       "tags": [
-        "Vite React",
-        "CSS",
-        "Branding"
+        "Digital Marketing",
+        "SEO Catalog",
+        "WhatsApp API",
+        "Pricing"
       ]
     },
     {
-      "id": "item-1",
-      "date": "Jun 30, 2026",
-      "category": "Infrastructure",
-      "title": "Production Testing & SSL Handshake",
-      "description": "Executed secure socket handshakes, ran end-to-end routing simulation checks, and certified full readiness for deployment.",
-      "theme": "default",
-      "tasks": [
-        "Verified HTTPS SSL bindings on Windows Server IIS",
-        "Ran traffic load metrics between the separate server nodes"
-      ],
-      "tags": [
-        "IIS",
-        "SSL",
-        "Testing"
-      ]
-    },
-    {
-      "id": "item-2",
-      "date": "Jun 29, 2026",
-      "category": "Frontend",
-      "title": "React Production Builds & IIS MIME Setup",
-      "description": "Compiled the Vite React dashboard into optimized static assets and configured necessary MIME type bindings in IIS.",
-      "theme": "purple-theme",
-      "tasks": [
-        "Run `npm run build` optimization parameters",
-        "Configured web.config rules to serve JSON static files securely"
-      ],
-      "tags": [
-        "React",
-        "Vite",
-        "web.config"
-      ]
-    },
-    {
-      "id": "item-3",
-      "date": "Jun 26, 2026",
-      "category": "Backend",
-      "title": "Secure Portal Access Token Validation",
-      "description": "Implemented secure access token filters on the .NET 10 API middleware to restrict client access to whitelisted domains.",
-      "theme": "default",
-      "tasks": [
-        "Programmed JWT token policy rules in Program.cs",
-        "Sanitized secure API access endpoints"
-      ],
-      "tags": [
-        ".NET 10",
-        "JWT",
-        "Middleware"
-      ]
-    },
-    {
-      "id": "item-4",
-      "date": "Jun 25, 2026",
-      "category": "Bug Fixes",
-      "title": "Bug Fix: Safari Flexbox Layout Issues",
-      "description": "Fixed rendering bugs where scrolling cards on the client timeline dashboard were misaligned on Safari browsers.",
+      "id": "aug-19",
+      "date": "Aug 19, 2026",
+      "category": "Signage Engineering",
+      "title": "3D Commercial Signages & Fabrication Catalog Integration",
+      "description": "Designed comprehensive catalog for 3D LED Channel Letters, Highway Pylons, Reception Acrylics, and Vehicle Wraps with technical specifications and quote triggers.",
       "theme": "green-theme",
       "tasks": [
-        "Patched CSS variables containing webkit viewport definitions",
-        "Certified desktop layout alignment on Safari 17+"
+        "Designed comprehensive catalog for 3D LED Channel Letters, Highway Pylons, Reception Acrylics, and Vehicle Wraps",
+        "Configured interactive service option cards with technical engineering specifications and turnaround times",
+        "Wired direct quote estimation triggers linking catalog items to the inquiry submission engine"
       ],
       "tags": [
-        "CSS",
-        "Safari",
-        "Flexbox"
+        "3D Signages",
+        "Channel Letters",
+        "Vehicle Wraps",
+        "Catalog"
       ]
     },
     {
-      "id": "item-5",
-      "date": "Jun 23, 2026",
-      "category": "Backend",
-      "title": "Project WorkUpdates API Controller",
-      "description": "Programmed C# controllers to support the timeline database storage, enabling JSON updates to write to Postgres.",
+      "id": "aug-18",
+      "date": "Aug 18, 2026",
+      "category": "Support & Automation",
+      "title": "CRM Support Ticketing System & SMTP Alerts",
+      "description": "Implemented multi-user support ticketing engine with priority badges (low, medium, high), threaded message replies, and automated email notifications sent on ticket updates.",
       "theme": "default",
       "tasks": [
-        "Coded CRUD endpoints inside ProjectUpdatesController",
-        "Wrote unit tests confirming JSON payload serialization"
+        "Implemented multi-user support ticketing engine with priority badges (low, medium, high)",
+        "Engineered threaded message reply capabilities between clients and developer support team",
+        "Configured automated email notifications sent on ticket creation and status updates"
       ],
       "tags": [
-        ".NET 10",
-        "JSONB",
-        "API"
+        "Support Tickets",
+        "SMTP Alerts",
+        "Customer Portal",
+        "Workflow"
       ]
     },
     {
-      "id": "item-6",
-      "date": "Jun 22, 2026",
-      "category": "Backend",
-      "title": "AWS SES Mailer SDK Connections",
-      "description": "Integrated the AWS SDK SES client to process notification emails when invoice payments are simulated.",
+      "id": "aug-17",
+      "date": "Aug 17, 2026",
+      "category": "Static Assets & Media",
+      "title": "Static Asset Proxying & Live Fallback Caching Engine",
+      "description": "Implemented dynamic asset proxy streaming from production webroots with disk-cache fallback, eliminating broken media links during layout editing and live view testing.",
       "theme": "purple-theme",
       "tasks": [
-        "Wrote MailKit wrappers referencing credentials",
-        "Set up secure template format files for notifications"
+        "Implemented dynamic asset proxy streaming from production webroots with disk-cache fallback",
+        "Engineered automatic asset downloading and storage inside local uploads directory",
+        "Eliminated broken media links during layout editing and live view testing"
       ],
       "tags": [
-        "AWS SES",
-        "SMTP",
-        "C#"
+        "Asset Proxy",
+        "Caching",
+        "Express.js",
+        "Storage"
       ]
     },
     {
-      "id": "item-7",
-      "date": "Jun 19, 2026",
-      "category": "Bug Fixes",
-      "title": "Bug Fix: Server PostgreSQL Timeout",
-      "description": "Resolved database query timeouts occurring when the Windows API server requested lists from the IONOS Ubuntu database.",
+      "id": "aug-16",
+      "date": "Aug 16, 2026",
+      "category": "Backend & Styles",
+      "title": "Real-Time Client Stylesheet Dynamic Streaming (/api/client-styles)",
+      "description": "Built /api/client-styles route resolving compiled CSS from production dist folders and source projects, ensuring visual editor canvas renders pixel-perfect fonts and layouts.",
       "theme": "green-theme",
       "tasks": [
-        "Tuned EF Core connection pooling parameters",
-        "Increased KeepAlive properties on Npgsql configurations"
+        "Built /api/client-styles route resolving compiled CSS from production dist folders and source projects",
+        "Implemented live CSS fallback fetching from production URL with UTF-8 response formatting",
+        "Ensured visual editor canvas renders pixel-perfect fonts, layouts, and luxury themes"
       ],
       "tags": [
-        "EF Core",
-        "Npgsql",
-        "Database"
+        "Dynamic CSS",
+        "API Route",
+        "Visual Sync",
+        "Node.js"
       ]
     },
     {
-      "id": "item-8",
-      "date": "Jun 18, 2026",
-      "category": "Infrastructure",
-      "title": "IIS Rewrite Rules & ARR Proxy configuration",
-      "description": "Configured URL Rewrite files to proxy browser traffic to the backend API services securely.",
+      "id": "aug-15",
+      "date": "Aug 15, 2026",
+      "category": "File Management",
+      "title": "Multer Upload Pipeline & Static Asset Serving",
+      "description": "Configured Multer middleware for secure high-resolution image uploads with mime-type validation, static file routing for /uploads, and filename sanitization.",
       "theme": "default",
       "tasks": [
-        "Configured IIS Application Request Routing",
-        "Programmed URL pattern rules to route `/api/*` requests to port 5000"
+        "Configured Multer middleware for secure high-resolution image uploads with mime-type validation",
+        "Set up static file routing for /uploads directory serving media to visual canvas and public pages",
+        "Implemented file naming sanitization and thumbnail generation helpers"
       ],
       "tags": [
-        "IIS",
-        "URL Rewrite",
-        "Proxy"
+        "Multer",
+        "File Uploads",
+        "Static Serving",
+        "Media"
       ]
     },
     {
-      "id": "item-9",
-      "date": "Jun 17, 2026",
-      "category": "Infrastructure",
-      "title": "C# Web API Windows Service wrapping",
-      "description": "Set up local system service scripts to run the .NET 10 API executable automatically on Windows startup.",
+      "id": "aug-14",
+      "date": "Aug 14, 2026",
+      "category": "CMS & Compiler",
+      "title": "Server-Side Razor CSHTML View Compilation Engine",
+      "description": "Engineered automated CSHTML Razor layout compiler translating visual canvas JSON to .cshtml views and built 1-click publishing route writing directly to server Views directory.",
       "theme": "purple-theme",
       "tasks": [
-        "Wrote task schedules for Kestrel execution",
-        "Inspected event logs to verify service health"
+        "Engineered automated CSHTML Razor layout compiler translating visual canvas JSON to .cshtml views",
+        "Built 1-click publishing route writing compiled templates directly to server Views directory",
+        "Integrated layout header injection preserving @RenderBody() and MVC controller directives"
       ],
       "tags": [
-        "Windows Server",
-        "Kestrel",
-        "Services"
+        "CSHTML",
+        "Razor Compiler",
+        "Publishing",
+        ".NET MVC"
       ]
     },
     {
-      "id": "item-10",
-      "date": "Jun 16, 2026",
-      "category": "Database",
-      "title": "Ubuntu Cloud Port & Firewall whitelist",
-      "description": "Configured the IONOS Linux virtual server firewall parameters to whitelist request IPs securely.",
-      "theme": "default",
-      "tasks": [
-        "Whitelisted the Windows Server IP inside UFW",
-        "Configured PostgreSQL listening address bindings"
-      ],
-      "tags": [
-        "UFW",
-        "Firewall",
-        "IONOS"
-      ]
-    },
-    {
-      "id": "item-11",
-      "date": "Jun 15, 2026",
-      "category": "Frontend",
-      "title": "Bootstrap Grid Integrations in React",
-      "description": "Integrated Bootstrap styling libraries into the CRM components to build responsive dashboards.",
+      "id": "aug-13",
+      "date": "Aug 13, 2026",
+      "category": "CMS Engine",
+      "title": "Layout Persistence & JSON Data Store Architecture",
+      "description": "Designed JSON database schema (pages.json) storing HTML, CSS, component AST, and style rules with 50MB body-parser limits and automatic draft checkpoint backups.",
       "theme": "green-theme",
       "tasks": [
-        "Imported customized Bootstrap Sass variables",
-        "Designed grid system for CRM analytics panel"
+        "Designed JSON database schema (pages.json) storing HTML, CSS, component AST, and style rules",
+        "Built CRUD API endpoints (/api/pages) with body-parser limits expanded to 50MB for large templates",
+        "Configured automatic draft checkpoint backups preventing accidental data loss during edits"
       ],
       "tags": [
-        "React",
-        "Bootstrap",
-        "SCSS"
+        "JSON Store",
+        "CRUD API",
+        "Draft History",
+        "Data Layer"
       ]
     },
     {
-      "id": "item-12",
-      "date": "Jun 12, 2026",
-      "category": "Bug Fixes",
-      "title": "Bug Fix: API CORS Policy Block",
-      "description": "Resolved backend CORS errors that were blocking Vite React development traffic during API requests.",
+      "id": "aug-12",
+      "date": "Aug 12, 2026",
+      "category": "Visual Editor",
+      "title": "GrapesJS Visual Editor Integration in Angular CRM",
+      "description": "Integrated GrapesJS drag-and-drop studio into Angular 22 component architecture with custom luxury block palette and iframe sandbox isolation.",
       "theme": "default",
       "tasks": [
-        "Added dynamic CORS policies in Program.cs",
-        "Tested request headers mapping"
+        "Integrated GrapesJS drag-and-drop studio into Angular 22 component architecture",
+        "Created custom luxury block palette: Heros, Feature Grids, Testimonials, Contact Forms, Pricing Tables",
+        "Implemented iframe sandbox isolation preventing parent CSS collisions with canvas layouts"
       ],
       "tags": [
-        "CORS",
-        "Web API",
-        "Fix"
+        "GrapesJS",
+        "Angular 22",
+        "Drag & Drop",
+        "Visual Canvas"
       ]
     },
     {
-      "id": "item-13",
-      "date": "Jun 11, 2026",
-      "category": "Backend",
-      "title": "CRM Client CRUD controllers",
-      "description": "Programmed .NET Controller files mapping Client CRM accounts, enabling full lead tracking APIs.",
+      "id": "aug-11",
+      "date": "Aug 11, 2026",
+      "category": "RCM Platform Production",
+      "title": "RCM Platform End-to-End Production Verification & DNS Launch",
+      "description": "Completed end-to-end production verification of https://rcm.perfectsignscanada.com/ on IIS, verifying DNS propagation, SSL handshake security, and sub-second load times.",
       "theme": "purple-theme",
       "tasks": [
-        "Wrote routes inside CrmController",
-        "Connected EF Core context methods to list entities"
+        "Completed end-to-end production verification of https://rcm.perfectsignscanada.com/ on IIS",
+        "Verified DNS propagation, SSL/TLS handshake security, and sub-second load times",
+        "Validated provider inquiry submission forms and patient intake routing in production environment"
       ],
       "tags": [
-        "C#",
-        "EF Core",
-        "REST"
+        "RCM Production",
+        "DNS Launch",
+        "IIS Live",
+        "Verification"
       ]
     },
     {
-      "id": "item-14",
-      "date": "Jun 10, 2026",
-      "category": "Backend",
-      "title": "JWT Auth Token generation & filters",
-      "description": "Coded authorization handlers to secure CRM admin actions, generating secure web tokens on login.",
-      "theme": "default",
-      "tasks": [
-        "Configured SymmetricSecurityKey parameters",
-        "Coded HMAC-SHA256 password hash helpers"
-      ],
-      "tags": [
-        "JWT",
-        "SHA-256",
-        "Security"
-      ]
-    },
-    {
-      "id": "item-15",
-      "date": "Jun 09, 2026",
-      "category": "Database",
-      "title": "EF Core connection pooling & mapping",
-      "description": "Configured the API database pool, mapping PostgreSQL database schemas into C# properties.",
+      "id": "aug-10",
+      "date": "Aug 10, 2026",
+      "category": "RCM Security & SSL",
+      "title": "SSL/TLS Certificate Installation & HTTPS Binding for RCM Portal",
+      "description": "Installed and bound SSL/TLS Certificate for domain rcm.perfectsignscanada.com in IIS Manager, configuring automatic HTTP-to-HTTPS redirect rules.",
       "theme": "green-theme",
       "tasks": [
-        "Setup DB sets inside AppDbContext",
-        "Verified migration mappings using Npgsql packages"
+        "Installed and bound SSL/TLS Certificate for domain rcm.perfectsignscanada.com in IIS Manager",
+        "Configured HTTP-to-HTTPS automatic 301 permanent redirect rules via IIS URL Rewrite module",
+        "Verified TLS 1.3 cipher suite compliance and zero mixed-content warnings across all pages"
       ],
       "tags": [
-        "EF Core",
-        "Npgsql",
-        "C#"
+        "SSL Certificate",
+        "HTTPS",
+        "IIS Binding",
+        "URL Rewrite"
       ]
     },
     {
-      "id": "item-16",
-      "date": "Jun 08, 2026",
-      "category": "Database",
-      "title": "PostgreSQL DDL schema initialization",
-      "description": "Created standard database tables and whitelisted key index references to prepare for migrations.",
+      "id": "aug-09",
+      "date": "Aug 09, 2026",
+      "category": "RCM IIS Hosting",
+      "title": "IIS Web Server Hosting Setup for rcm.perfectsignscanada.com",
+      "description": "Configured dedicated IIS Website binding for rcm.perfectsignscanada.com on Port 80 and 443 with isolated Application Pool and web.config URL rewrite rules.",
       "theme": "default",
       "tasks": [
-        "Wrote initial schema setup script files",
-        "Configured primary table entities (Users, Subscriptions)"
+        "Configured dedicated IIS Website binding for rcm.perfectsignscanada.com on Port 80 and 443",
+        "Created isolated Application Pool (.NET CLR Version: No Managed Code, Integrated Pipeline)",
+        "Configured web.config URL rewrite rules for SPA client-side routing and static compression"
       ],
       "tags": [
-        "SQL",
-        "Postgres",
-        "DDL"
+        "IIS Server",
+        "App Pool",
+        "Hosting",
+        "Web.config"
       ]
     },
     {
-      "id": "item-17",
-      "date": "Jun 05, 2026",
-      "category": "Infrastructure",
-      "title": "Development Server & HTTPS bindings",
-      "description": "Configured local development HTTPS certificates and verified hosting parameters under IIS configurations.",
+      "id": "aug-08",
+      "date": "Aug 08, 2026",
+      "category": "RCM Build & Prep",
+      "title": "Production Build Optimization for RCM Medical Billing Website",
+      "description": "Executed production ahead-of-time (AOT) compilation and tree-shaking for RCM website bundle, optimizing asset sizes and prepping staging distribution for IIS deployment.",
       "theme": "purple-theme",
       "tasks": [
-        "Generated local localhost SSL certificates",
-        "Inspected port parameters inside launchSettings"
+        "Executed production ahead-of-time (AOT) compilation and tree-shaking for RCM website bundle",
+        "Optimized asset sizes, lazy-loaded medical specialty modules, and minified CSS stylesheets",
+        "Prepped staging distribution directory for deployment to Windows Server IIS webroot"
       ],
       "tags": [
-        "IIS Express",
-        "SSL",
-        "Setup"
+        "Production Build",
+        "Optimization",
+        "Bundling",
+        "Staging"
       ]
     },
     {
-      "id": "item-18",
-      "date": "Jun 04, 2026",
-      "category": "Backend",
-      "title": "ASP.NET Core (.NET 10) API setup",
-      "description": "Created the backend core directory structure, scaffolded project config files, and verified building pipelines.",
-      "theme": "default",
-      "tasks": [
-        "Scaffolded ClientPortal.Api project solution",
-        "Wrote assembly package definitions"
-      ],
-      "tags": [
-        ".NET 10",
-        "C#",
-        "SDK"
-      ]
-    },
-    {
-      "id": "item-19",
-      "date": "Jun 03, 2026",
-      "category": "Database",
-      "title": "PostgreSQL local server installation",
-      "description": "Installed and initialized the local PostgreSQL database server, configuring connection properties.",
+      "id": "aug-07",
+      "date": "Aug 07, 2026",
+      "category": "RCM Compliance",
+      "title": "HIPAA & PIPEDA Compliance Architecture & Access Security",
+      "description": "Implemented HIPAA and PIPEDA compliant data protection standards for patient health information (PHI) with end-to-end TLS encryption and role-based access control.",
       "theme": "green-theme",
       "tasks": [
-        "Initialized database engine system variables",
-        "Configured default admin credentials and databases"
+        "Implemented HIPAA and PIPEDA compliant data protection standards for patient health information (PHI)",
+        "Enforced end-to-end TLS encryption, secure session tokens, and automated audit trail logging",
+        "Created role-based access control (RBAC) separating administrative, billing, and physician roles"
       ],
       "tags": [
-        "Postgres",
-        "Database",
-        "Setup"
+        "HIPAA",
+        "PIPEDA",
+        "Security",
+        "Compliance",
+        "PHI"
       ]
     },
     {
-      "id": "item-20",
-      "date": "Jun 02, 2026",
-      "category": "Frontend",
-      "title": "Bootstrap 5 installation & SCSS structure",
-      "description": "Installed Bootstrap 5 layout libraries and configured SCSS files to set custom branding theme variables.",
+      "id": "aug-06",
+      "date": "Aug 06, 2026",
+      "category": "RCM Revenue Cycle",
+      "title": "Denial Management & Accounts Receivable (A/R) Recovery Engine",
+      "description": "Designed Denial Management tracking module classifying rejected claims by CARC/RARC reason codes, built automated appeals generator, and implemented 30/60/90/120+ day A/R aging buckets.",
       "theme": "default",
       "tasks": [
-        "Configured custom bootstrap grids",
-        "Wrote variables file overriding colors and buttons"
+        "Designed Denial Management tracking module classifying rejected claims by CARC and RARC reason codes",
+        "Built automated appeals packet generator with supporting clinical documentation attachments",
+        "Implemented 30/60/90/120+ day A/R aging buckets and collector follow-up worklists"
       ],
       "tags": [
-        "Bootstrap 5",
-        "SCSS",
-        "Design"
+        "Denial Management",
+        "A/R Recovery",
+        "Appeals",
+        "Revenue Cycle"
       ]
     },
     {
-      "id": "item-21",
-      "date": "Jun 01, 2026",
-      "category": "Frontend",
-      "title": "Node.js environment & Vite React setup",
-      "description": "Installed Node.js LTS packages locally and scaffolded the React template using Vite tools.",
+      "id": "aug-05",
+      "date": "Aug 05, 2026",
+      "category": "RCM Patient Billing",
+      "title": "Patient Invoicing, Statements & Online Co-Pay Payment Portal",
+      "description": "Developed electronic patient statement generator with itemized EOB, integrated secure online payment gateway for copays/deductibles, and configured automated SMS/email payment reminders.",
       "theme": "purple-theme",
       "tasks": [
-        "Configured node environment paths",
-        "Scaffolded React frontend repository"
+        "Developed electronic patient statement generator with itemized explanation of benefits (EOB)",
+        "Integrated secure online payment gateway for patient copays, deductibles, and payment plans",
+        "Configured automated SMS and email payment reminder notifications with secure payment links"
       ],
       "tags": [
-        "Node.js",
-        "React",
-        "Vite"
+        "Patient Billing",
+        "Online Payments",
+        "Statements",
+        "EOB"
+      ]
+    },
+    {
+      "id": "aug-04",
+      "date": "Aug 04, 2026",
+      "category": "RCM Data Integration",
+      "title": "EHR/EMR Interface & EDI 837/835 Claims Transmission Pipeline",
+      "description": "Engineered EHR interface protocols for demographic and charge sync, built ANSI 837P/837I electronic claims generator and 835 ERA parser, and configured clearinghouse communication pipeline.",
+      "theme": "green-theme",
+      "tasks": [
+        "Engineered Electronic Health Record (EHR) interface protocols for patient demographic and charge capture sync",
+        "Built ANSI 837P/837I electronic claims transmission generator and 835 Electronic Remittance Advice (ERA) parser",
+        "Implemented automated clearinghouse communication pipeline with batch submission validation"
+      ],
+      "tags": [
+        "EHR Integration",
+        "EDI 837",
+        "ERA 835",
+        "Clearinghouse"
+      ]
+    },
+    {
+      "id": "aug-03",
+      "date": "Aug 03, 2026",
+      "category": "RCM Coding Engine",
+      "title": "Medical Coding Engine & Claims Scrubber Architecture",
+      "description": "Designed intelligent medical coding engine supporting ICD-10-CM, CPT, and HCPCS Level II code sets, built automated Claims Scrubber validating NCCI edits, and reduced first-pass denial rates.",
+      "theme": "default",
+      "tasks": [
+        "Designed intelligent medical coding engine supporting ICD-10-CM, CPT, and HCPCS Level II code sets",
+        "Built automated Claims Scrubber validating National Correct Coding Initiative (NCCI) edits prior to submission",
+        "Implemented real-time claim error detection reducing first-pass denial rates below 2%"
+      ],
+      "tags": [
+        "Medical Coding",
+        "ICD-10",
+        "CPT",
+        "Claims Scrubber",
+        "NCCI"
+      ]
+    },
+    {
+      "id": "aug-02",
+      "date": "Aug 02, 2026",
+      "category": "RCM Design & UX",
+      "title": "Responsive UI Architecture & Specialty Service Portals for RCM",
+      "description": "Designed high-performance responsive UI tailored for medical practices and surgical centers, created specialized specialty showcase pages, and built interactive ROI practice revenue calculator.",
+      "theme": "purple-theme",
+      "tasks": [
+        "Designed high-performance responsive UI tailored for medical practices, clinics, and surgical centers",
+        "Created specialized service showcase pages: Primary Care, Cardiology, Orthopedics, Radiology, and Mental Health",
+        "Built interactive ROI calculator demonstrating practice revenue increase with outsourced RCM"
+      ],
+      "tags": [
+        "UI/UX",
+        "Medical Specialties",
+        "ROI Calculator",
+        "Responsive"
+      ]
+    },
+    {
+      "id": "aug-01",
+      "date": "Aug 01, 2026",
+      "category": "RCM Architecture",
+      "title": "RCM Medical Billing Platform Kickoff & Solution Architecture",
+      "description": "Initiated project scoping and system architecture for Perfect Signs RCM Medical Billing Services (rcm.perfectsignscanada.com), mapping revenue cycle pipeline and defining IIS hosting and SSL criteria.",
+      "theme": "green-theme",
+      "tasks": [
+        "Initiated project scoping and system architecture for Perfect Signs RCM Medical Billing Services (rcm.perfectsignscanada.com)",
+        "Mapped full revenue cycle pipeline: Patient Registration -> Eligibility -> Coding -> Claims -> Payments -> A/R",
+        "Defined Windows Server IIS hosting requirements, SSL certification criteria, and database entity models"
+      ],
+      "tags": [
+        "RCM Kickoff",
+        "Healthcare IT",
+        "Architecture",
+        "Roadmap"
       ]
     }
   ]
