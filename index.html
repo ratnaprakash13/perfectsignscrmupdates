@@ -1038,12 +1038,12 @@
     <!-- JSON Data Store containing all timeline logs -->
     <script id="timeline-data" type="application/json">
 {
-  "projectTitle": "Perfect Signs Portals & CRM Ecosystem",
-  "clientInfo": "Project: RCM Medical Billing, CRM Portals & Invoicing Integration",
+  "projectTitle": "Perfect Signs CRM & Portals",
+  "clientInfo": "Project: RCM Medical Billing, CRM Integrations & Invoicing Portals",
   "clientAvatar": "P",
   "status": "Completed & Deployed",
   "progress": 100,
-  "timelineTitle": "August 2026 Daily Progress & Milestone Timeline (30 Working Days)",
+  "timelineTitle": "June - August 2026 Comprehensive Work Timeline",
   "items": [
     {
       "id": "aug-30",
@@ -1615,6 +1615,736 @@
         "Healthcare IT",
         "Architecture",
         "Roadmap"
+      ]
+    },
+    {
+      "id": "july-1",
+      "date": "Jul 31, 2026",
+      "category": "Infrastructure",
+      "title": "Production Deployment & SSL Binding",
+      "description": "Verified HTTPS SSL certificates, cleared debug logs, and performed the final deployment sign-off for the July CRM update.",
+      "theme": "default",
+      "tasks": [
+        "Verified SSL bindings and server response headers on IIS",
+        "Performed post-deployment routing and sanity tests on crm.perfectsignscanada.com"
+      ],
+      "tags": [
+        "IIS",
+        "SSL",
+        "Production"
+      ]
+    },
+    {
+      "id": "july-2",
+      "date": "Jul 30, 2026",
+      "category": "Infrastructure",
+      "title": "Technical Release Notes & Client Guide",
+      "description": "Authored release notes detailing image size boundaries and compiled usage guides for the daycare administration.",
+      "theme": "purple-theme",
+      "tasks": [
+        "Wrote client-facing documentation explaining image optimization limits",
+        "Sent WhatsApp and email updates to client detailing the CRM resolution"
+      ],
+      "tags": [
+        "Documentation",
+        "Release Notes"
+      ]
+    },
+    {
+      "id": "july-3",
+      "date": "Jul 29, 2026",
+      "category": "Bug Fixes",
+      "title": "Bug Fix: Image Upload Bundler Crash",
+      "description": "Resolved critical Vite compiler crashes triggered when clients uploaded uncompressed high-resolution images to daycare pages.",
+      "theme": "green-theme",
+      "tasks": [
+        "Added client-side image size warnings and asset compression rules",
+        "Fixed CSS style shifts caused by un-optimized media wrappers"
+      ],
+      "tags": [
+        "Vite",
+        "Assets",
+        "SCSS"
+      ]
+    },
+    {
+      "id": "july-4",
+      "date": "Jul 28, 2026",
+      "category": "Bug Fixes",
+      "title": "Zero-Downtime Fallback Configuration",
+      "description": "Configured secondary fallback templates to keep the registration page accessible during code deployments.",
+      "theme": "default",
+      "tasks": [
+        "Wrote routing redirects to load cached static templates on error",
+        "Monitored live registration telemetry to verify zero-downtime transition"
+      ],
+      "tags": [
+        "Routing",
+        "Fallback",
+        "Availability"
+      ]
+    },
+    {
+      "id": "july-5",
+      "date": "Jul 27, 2026",
+      "category": "Bug Fixes",
+      "title": "Bug Fix: Daycare Registration Submit Failure",
+      "description": "Fixed a critical submission block in crm.perfectsignscanada.com where mobile registration forms failed to submit on iOS.",
+      "theme": "green-theme",
+      "tasks": [
+        "Patched event listener defaults for touch and tap actions in React",
+        "Tested the customer registration form workflow on iPhone and iPad Safari"
+      ],
+      "tags": [
+        "React",
+        "iOS Safari",
+        "Form Validation"
+      ]
+    },
+    {
+      "id": "july-6",
+      "date": "Jul 24, 2026",
+      "category": "Database",
+      "title": "Daycare CRM Page Sync & JSON Mappings",
+      "description": "Mapped client-created pages inside the CRM to the dynamic configuration controller, ensuring newly added pages sync properly.",
+      "theme": "default",
+      "tasks": [
+        "Updated page sync routes in LespetitsController.cs",
+        "Corrected pages.json mapping errors to sync client dashboards dynamically"
+      ],
+      "tags": [
+        ".NET 10",
+        "C#",
+        "pages.json"
+      ]
+    },
+    {
+      "id": "july-7",
+      "date": "Jul 23, 2026",
+      "category": "Bug Fixes",
+      "title": "Bug Fix: Daycare CRM Publish Error",
+      "description": "Investigated issues where compiled assets (index.html, JS, images) were missing from the production build dist folder during publishes.",
+      "theme": "green-theme",
+      "tasks": [
+        "Debugged msbuild post-build task execution paths",
+        "Corrected path copying directories for index and assets in publish script"
+      ],
+      "tags": [
+        "MSBuild",
+        "Publishing",
+        "Fix"
+      ]
+    },
+    {
+      "id": "july-8",
+      "date": "Jul 22, 2026",
+      "category": "Infrastructure",
+      "title": "CRM Subdomain Routing Proxy",
+      "description": "Configured IIS URL Rewrite rules to safely proxy incoming requests from crm.perfectsignscanada.com to the backend REST API.",
+      "theme": "default",
+      "tasks": [
+        "Programmed reverse proxy rules in web.config",
+        "Verified token authorization headers are forwarded cleanly through the proxy"
+      ],
+      "tags": [
+        "IIS",
+        "URL Rewrite",
+        "Proxy"
+      ]
+    },
+    {
+      "id": "july-9",
+      "date": "Jul 21, 2026",
+      "category": "Frontend",
+      "title": "CRM Bundler Optimizations",
+      "description": "Configured production compiler settings to bundle block sections together, reducing file load times.",
+      "theme": "purple-theme",
+      "tasks": [
+        "Configured custom Webpack chunk splitting for the page builder",
+        "Added lazy loading for complex editor blocks"
+      ],
+      "tags": [
+        "Webpack",
+        "Vite",
+        "Performance"
+      ]
+    },
+    {
+      "id": "july-10",
+      "date": "Jul 20, 2026",
+      "category": "Frontend",
+      "title": "CRM Editor Help & Guides Integration",
+      "description": "Designed and integrated a beautiful, visual Help Guide explaining editor blocks, style controls, and layer managers.",
+      "theme": "purple-theme",
+      "tasks": [
+        "Coded interactive sidebar listing editor layout instructions",
+        "Designed responsive walkthrough guides for client administrator use"
+      ],
+      "tags": [
+        "React",
+        "HTML",
+        "UI Guide"
+      ]
+    },
+    {
+      "id": "july-11",
+      "date": "Jul 17, 2026",
+      "category": "Frontend",
+      "title": "Navbar & Footer WYSIWYG Editor",
+      "description": "Enabled custom client editing of global website layout headers and footers directly from the CRM editor panel.",
+      "theme": "default",
+      "tasks": [
+        "Exposed header and footer nodes as editable zones in the CRM UI",
+        "Integrated custom link-builder forms for navigation settings"
+      ],
+      "tags": [
+        "Vite",
+        "HTML5",
+        "Editor"
+      ]
+    },
+    {
+      "id": "july-12",
+      "date": "Jul 16, 2026",
+      "category": "Frontend",
+      "title": "Drag-and-Drop Registration Form Builder",
+      "description": "Implemented form block elements allowing client administrators to drag and drop checkboxes, dropdowns, and text inputs.",
+      "theme": "purple-theme",
+      "tasks": [
+        "Programmed drag-and-drop actions for form input blocks",
+        "Built responsive registration input layouts (radio buttons, selects)"
+      ],
+      "tags": [
+        "Vite React",
+        "Drag-Drop",
+        "Forms"
+      ]
+    },
+    {
+      "id": "july-13",
+      "date": "Jul 15, 2026",
+      "category": "Infrastructure",
+      "title": "IIS Directory Permission Locking",
+      "description": "Configured secure application directories and granted proper read/write access controls to the IIS_IUSRS worker group.",
+      "theme": "default",
+      "tasks": [
+        "Configured directory inheritances and resolved permission blocks on local folders",
+        "Verified security permissions on published web.config file paths"
+      ],
+      "tags": [
+        "IIS",
+        "Security",
+        "Windows Server"
+      ]
+    },
+    {
+      "id": "july-14",
+      "date": "Jul 14, 2026",
+      "category": "Infrastructure",
+      "title": "IIS Port Conflicts & Host Headers",
+      "description": "Resolved local server port conflicts on the IIS instance, allowing separate hostnames to share port 80/443 simultaneously.",
+      "theme": "purple-theme",
+      "tasks": [
+        "Configured distinct host headers in IIS bindings",
+        "Mapped separate web sites for frontend and backend server instances"
+      ],
+      "tags": [
+        "IIS",
+        "Ports",
+        "Bindings"
+      ]
+    },
+    {
+      "id": "july-15",
+      "date": "Jul 13, 2026",
+      "category": "Infrastructure",
+      "title": "Cloud Server Directory Scaffolding",
+      "description": "Set up server directory structures for deployment and whitelisted inbound connection ports on the cloud firewall.",
+      "theme": "default",
+      "tasks": [
+        "Created hosted directories under C:\\inetpub\\wwwroot\\perfectsignsreactweb",
+        "Verified server-side firewall configurations on the Windows server dashboard"
+      ],
+      "tags": [
+        "IIS",
+        "Windows Server",
+        "Firewall"
+      ]
+    },
+    {
+      "id": "july-16-invoice",
+      "date": "Jul 10, 2026",
+      "category": "Frontend",
+      "title": "Invoices Charting & Visual Dashboard",
+      "description": "Integrated chart display components in React to show dynamic billing data and invoices history.",
+      "theme": "purple-theme",
+      "tasks": [
+        "Implemented chart UI wrappers using Chart.js libraries",
+        "Connected components to active C# controller data streams"
+      ],
+      "tags": [
+        "React",
+        "Chart.js",
+        "Dashboard"
+      ]
+    },
+    {
+      "id": "july-17-invoice",
+      "date": "Jul 09, 2026",
+      "category": "Backend",
+      "title": "Invoices Graph Data API Controller",
+      "description": "Programmed backend controller endpoints to aggregate billing records, returning chart-friendly JSON payloads.",
+      "theme": "default",
+      "tasks": [
+        "Wrote aggregation query methods in AuthService.cs",
+        "Exposed dashboard REST endpoints returning formatted datasets"
+      ],
+      "tags": [
+        ".NET 10",
+        "REST",
+        "C#"
+      ]
+    },
+    {
+      "id": "july-18-invoice",
+      "date": "Jul 08, 2026",
+      "category": "Backend",
+      "title": "SMTP Email Client Wrapper",
+      "description": "Configured SMTP settings and developed mail dispatch wrappers for automated billing notifications.",
+      "theme": "purple-theme",
+      "tasks": [
+        "Configured MailKit client details with server credentials",
+        "Wrote transactional email notification triggers on invoice generation"
+      ],
+      "tags": [
+        "SMTP",
+        "C#",
+        "MailKit"
+      ]
+    },
+    {
+      "id": "july-19-invoice",
+      "date": "Jul 07, 2026",
+      "category": "Backend",
+      "title": "CRM Password Settings Panel",
+      "description": "Created secure settings API controllers to allow client administrators to change accounts credentials.",
+      "theme": "default",
+      "tasks": [
+        "Coded password reset routes inside AuthController.cs",
+        "Implemented secure salting and hashing validations for updates"
+      ],
+      "tags": [
+        ".NET 10",
+        "Security",
+        "C#"
+      ]
+    },
+    {
+      "id": "july-20-invoice",
+      "date": "Jul 06, 2026",
+      "category": "Database",
+      "title": "PostgreSQL Schema Entity Mappings",
+      "description": "Resolved PostgreSQL database configuration errors related to missing user relation tables.",
+      "theme": "green-theme",
+      "tasks": [
+        "Fixed app_users mapping definitions in AppDbContext",
+        "Ran EF Core migrations to ensure correct Postgres table schema alignments"
+      ],
+      "tags": [
+        "EF Core",
+        "Postgres",
+        "Debugging"
+      ]
+    },
+    {
+      "id": "july-21-invoice",
+      "date": "Jul 03, 2026",
+      "category": "Frontend",
+      "title": "Testimonials Scrolling Marquee",
+      "description": "Developed a smooth horizontal scrolling layout showing realistic client reviews.",
+      "theme": "green-theme",
+      "tasks": [
+        "Wrote custom CSS keyframe animations for slow marquee scrolls",
+        "Added page enter transitions to all navigation subpages"
+      ],
+      "tags": [
+        "CSS",
+        "Animations",
+        "UI/UX"
+      ]
+    },
+    {
+      "id": "july-22-invoice",
+      "date": "Jul 02, 2026",
+      "category": "Frontend",
+      "title": "Branding & Aesthetic Enhancements",
+      "description": "Refined typography sizes, brightened colors, and enlarged client brand logos for premium look.",
+      "theme": "purple-theme",
+      "tasks": [
+        "Adjusted request-a-quote button contrast and color styling",
+        "Updated layout sizes for the Trusted By client logo banner"
+      ],
+      "tags": [
+        "Vite React",
+        "CSS",
+        "Branding"
+      ]
+    },
+    {
+      "id": "item-1",
+      "date": "Jun 30, 2026",
+      "category": "Infrastructure",
+      "title": "Production Testing & SSL Handshake",
+      "description": "Executed secure socket handshakes, ran end-to-end routing simulation checks, and certified full readiness for deployment.",
+      "theme": "default",
+      "tasks": [
+        "Verified HTTPS SSL bindings on Windows Server IIS",
+        "Ran traffic load metrics between the separate server nodes"
+      ],
+      "tags": [
+        "IIS",
+        "SSL",
+        "Testing"
+      ]
+    },
+    {
+      "id": "item-2",
+      "date": "Jun 29, 2026",
+      "category": "Frontend",
+      "title": "React Production Builds & IIS MIME Setup",
+      "description": "Compiled the Vite React dashboard into optimized static assets and configured necessary MIME type bindings in IIS.",
+      "theme": "purple-theme",
+      "tasks": [
+        "Run `npm run build` optimization parameters",
+        "Configured web.config rules to serve JSON static files securely"
+      ],
+      "tags": [
+        "React",
+        "Vite",
+        "web.config"
+      ]
+    },
+    {
+      "id": "item-3",
+      "date": "Jun 26, 2026",
+      "category": "Backend",
+      "title": "Secure Portal Access Token Validation",
+      "description": "Implemented secure access token filters on the .NET 10 API middleware to restrict client access to whitelisted domains.",
+      "theme": "default",
+      "tasks": [
+        "Programmed JWT token policy rules in Program.cs",
+        "Sanitized secure API access endpoints"
+      ],
+      "tags": [
+        ".NET 10",
+        "JWT",
+        "Middleware"
+      ]
+    },
+    {
+      "id": "item-4",
+      "date": "Jun 25, 2026",
+      "category": "Bug Fixes",
+      "title": "Bug Fix: Safari Flexbox Layout Issues",
+      "description": "Fixed rendering bugs where scrolling cards on the client timeline dashboard were misaligned on Safari browsers.",
+      "theme": "green-theme",
+      "tasks": [
+        "Patched CSS variables containing webkit viewport definitions",
+        "Certified desktop layout alignment on Safari 17+"
+      ],
+      "tags": [
+        "CSS",
+        "Safari",
+        "Flexbox"
+      ]
+    },
+    {
+      "id": "item-5",
+      "date": "Jun 23, 2026",
+      "category": "Backend",
+      "title": "Project WorkUpdates API Controller",
+      "description": "Programmed C# controllers to support the timeline database storage, enabling JSON updates to write to Postgres.",
+      "theme": "default",
+      "tasks": [
+        "Coded CRUD endpoints inside ProjectUpdatesController",
+        "Wrote unit tests confirming JSON payload serialization"
+      ],
+      "tags": [
+        ".NET 10",
+        "JSONB",
+        "API"
+      ]
+    },
+    {
+      "id": "item-6",
+      "date": "Jun 22, 2026",
+      "category": "Backend",
+      "title": "AWS SES Mailer SDK Connections",
+      "description": "Integrated the AWS SDK SES client to process notification emails when invoice payments are simulated.",
+      "theme": "purple-theme",
+      "tasks": [
+        "Wrote MailKit wrappers referencing credentials",
+        "Set up secure template format files for notifications"
+      ],
+      "tags": [
+        "AWS SES",
+        "SMTP",
+        "C#"
+      ]
+    },
+    {
+      "id": "item-7",
+      "date": "Jun 19, 2026",
+      "category": "Bug Fixes",
+      "title": "Bug Fix: Server PostgreSQL Timeout",
+      "description": "Resolved database query timeouts occurring when the Windows API server requested lists from the IONOS Ubuntu database.",
+      "theme": "green-theme",
+      "tasks": [
+        "Tuned EF Core connection pooling parameters",
+        "Increased KeepAlive properties on Npgsql configurations"
+      ],
+      "tags": [
+        "EF Core",
+        "Npgsql",
+        "Database"
+      ]
+    },
+    {
+      "id": "item-8",
+      "date": "Jun 18, 2026",
+      "category": "Infrastructure",
+      "title": "IIS Rewrite Rules & ARR Proxy configuration",
+      "description": "Configured URL Rewrite files to proxy browser traffic to the backend API services securely.",
+      "theme": "default",
+      "tasks": [
+        "Configured IIS Application Request Routing",
+        "Programmed URL pattern rules to route `/api/*` requests to port 5000"
+      ],
+      "tags": [
+        "IIS",
+        "URL Rewrite",
+        "Proxy"
+      ]
+    },
+    {
+      "id": "item-9",
+      "date": "Jun 17, 2026",
+      "category": "Infrastructure",
+      "title": "C# Web API Windows Service wrapping",
+      "description": "Set up local system service scripts to run the .NET 10 API executable automatically on Windows startup.",
+      "theme": "purple-theme",
+      "tasks": [
+        "Wrote task schedules for Kestrel execution",
+        "Inspected event logs to verify service health"
+      ],
+      "tags": [
+        "Windows Server",
+        "Kestrel",
+        "Services"
+      ]
+    },
+    {
+      "id": "item-10",
+      "date": "Jun 16, 2026",
+      "category": "Database",
+      "title": "Ubuntu Cloud Port & Firewall whitelist",
+      "description": "Configured the IONOS Linux virtual server firewall parameters to whitelist request IPs securely.",
+      "theme": "default",
+      "tasks": [
+        "Whitelisted the Windows Server IP inside UFW",
+        "Configured PostgreSQL listening address bindings"
+      ],
+      "tags": [
+        "UFW",
+        "Firewall",
+        "IONOS"
+      ]
+    },
+    {
+      "id": "item-11",
+      "date": "Jun 15, 2026",
+      "category": "Frontend",
+      "title": "Bootstrap Grid Integrations in React",
+      "description": "Integrated Bootstrap styling libraries into the CRM components to build responsive dashboards.",
+      "theme": "green-theme",
+      "tasks": [
+        "Imported customized Bootstrap Sass variables",
+        "Designed grid system for CRM analytics panel"
+      ],
+      "tags": [
+        "React",
+        "Bootstrap",
+        "SCSS"
+      ]
+    },
+    {
+      "id": "item-12",
+      "date": "Jun 12, 2026",
+      "category": "Bug Fixes",
+      "title": "Bug Fix: API CORS Policy Block",
+      "description": "Resolved backend CORS errors that were blocking Vite React development traffic during API requests.",
+      "theme": "default",
+      "tasks": [
+        "Added dynamic CORS policies in Program.cs",
+        "Tested request headers mapping"
+      ],
+      "tags": [
+        "CORS",
+        "Web API",
+        "Fix"
+      ]
+    },
+    {
+      "id": "item-13",
+      "date": "Jun 11, 2026",
+      "category": "Backend",
+      "title": "CRM Client CRUD controllers",
+      "description": "Programmed .NET Controller files mapping Client CRM accounts, enabling full lead tracking APIs.",
+      "theme": "purple-theme",
+      "tasks": [
+        "Wrote routes inside CrmController",
+        "Connected EF Core context methods to list entities"
+      ],
+      "tags": [
+        "C#",
+        "EF Core",
+        "REST"
+      ]
+    },
+    {
+      "id": "item-14",
+      "date": "Jun 10, 2026",
+      "category": "Backend",
+      "title": "JWT Auth Token generation & filters",
+      "description": "Coded authorization handlers to secure CRM admin actions, generating secure web tokens on login.",
+      "theme": "default",
+      "tasks": [
+        "Configured SymmetricSecurityKey parameters",
+        "Coded HMAC-SHA256 password hash helpers"
+      ],
+      "tags": [
+        "JWT",
+        "SHA-256",
+        "Security"
+      ]
+    },
+    {
+      "id": "item-15",
+      "date": "Jun 09, 2026",
+      "category": "Database",
+      "title": "EF Core connection pooling & mapping",
+      "description": "Configured the API database pool, mapping PostgreSQL database schemas into C# properties.",
+      "theme": "green-theme",
+      "tasks": [
+        "Setup DB sets inside AppDbContext",
+        "Verified migration mappings using Npgsql packages"
+      ],
+      "tags": [
+        "EF Core",
+        "Npgsql",
+        "C#"
+      ]
+    },
+    {
+      "id": "item-16",
+      "date": "Jun 08, 2026",
+      "category": "Database",
+      "title": "PostgreSQL DDL schema initialization",
+      "description": "Created standard database tables and whitelisted key index references to prepare for migrations.",
+      "theme": "default",
+      "tasks": [
+        "Wrote initial schema setup script files",
+        "Configured primary table entities (Users, Subscriptions)"
+      ],
+      "tags": [
+        "SQL",
+        "Postgres",
+        "DDL"
+      ]
+    },
+    {
+      "id": "item-17",
+      "date": "Jun 05, 2026",
+      "category": "Infrastructure",
+      "title": "Development Server & HTTPS bindings",
+      "description": "Configured local development HTTPS certificates and verified hosting parameters under IIS configurations.",
+      "theme": "purple-theme",
+      "tasks": [
+        "Generated local localhost SSL certificates",
+        "Inspected port parameters inside launchSettings"
+      ],
+      "tags": [
+        "IIS Express",
+        "SSL",
+        "Setup"
+      ]
+    },
+    {
+      "id": "item-18",
+      "date": "Jun 04, 2026",
+      "category": "Backend",
+      "title": "ASP.NET Core (.NET 10) API setup",
+      "description": "Created the backend core directory structure, scaffolded project config files, and verified building pipelines.",
+      "theme": "default",
+      "tasks": [
+        "Scaffolded ClientPortal.Api project solution",
+        "Wrote assembly package definitions"
+      ],
+      "tags": [
+        ".NET 10",
+        "C#",
+        "SDK"
+      ]
+    },
+    {
+      "id": "item-19",
+      "date": "Jun 03, 2026",
+      "category": "Database",
+      "title": "PostgreSQL local server installation",
+      "description": "Installed and initialized the local PostgreSQL database server, configuring connection properties.",
+      "theme": "green-theme",
+      "tasks": [
+        "Initialized database engine system variables",
+        "Configured default admin credentials and databases"
+      ],
+      "tags": [
+        "Postgres",
+        "Database",
+        "Setup"
+      ]
+    },
+    {
+      "id": "item-20",
+      "date": "Jun 02, 2026",
+      "category": "Frontend",
+      "title": "Bootstrap 5 installation & SCSS structure",
+      "description": "Installed Bootstrap 5 layout libraries and configured SCSS files to set custom branding theme variables.",
+      "theme": "default",
+      "tasks": [
+        "Configured custom bootstrap grids",
+        "Wrote variables file overriding colors and buttons"
+      ],
+      "tags": [
+        "Bootstrap 5",
+        "SCSS",
+        "Design"
+      ]
+    },
+    {
+      "id": "item-21",
+      "date": "Jun 01, 2026",
+      "category": "Frontend",
+      "title": "Node.js environment & Vite React setup",
+      "description": "Installed Node.js LTS packages locally and scaffolded the React template using Vite tools.",
+      "theme": "purple-theme",
+      "tasks": [
+        "Configured node environment paths",
+        "Scaffolded React frontend repository"
+      ],
+      "tags": [
+        "Node.js",
+        "React",
+        "Vite"
       ]
     }
   ]
